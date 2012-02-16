@@ -32,6 +32,7 @@ end
 
 case ARGV[0]
 when "hi", "hello"
+ Helpers.greeting
 
 when "view"
  puts "View is not yet available."
