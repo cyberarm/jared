@@ -20,4 +20,5 @@ Gem::Specification.new do |s|
 
   # s.add_development_dependency ""
   s.add_runtime_dependency "green_shoes"
+  s.add_runtime_dependency "sys-uname"
 end

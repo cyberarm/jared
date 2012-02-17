@@ -18,15 +18,19 @@ class Helpers
  
  def self.date
   if Time.now.strftime("%d") == "2"
-   puts "#{Time.now.strftime("%A the %dnd of %Y")}"
+   puts "#{Time.now.strftime("%A the %dnd of %B %Y")}"
   elsif Time.now.strftime("%d") == "22"
-   puts "#{Time.now.strftime("%A the %dnd of %Y")}"
+   puts "#{Time.now.strftime("%A the %dnd of %B %Y")}"
   elsif  Time.now.strftime("%d") == "3"
-   puts "#{Time.now.strftime("%A the %drd of %Y")}"
+   puts "#{Time.now.strftime("%A the %drd of %B %Y")}"
   elsif Time.now.strftime("%d") == "33"
-   puts "#{Time.now.strftime("%A the %drd of %Y")}"
+   puts "#{Time.now.strftime("%A the %drd of %B %Y")}"
+  elsif Time.now.strftime("%d") == "1"
+   puts "#{Time.now.strftime("%A the %dst of %B %Y")}"
+  elsif Time.now.strftime("%d") == "21"
+   puts "#{Time.now.strftime("%A the %dst of %B %Y")}"
   else
-   puts "#{Time.now.strftime("%A the %dth of %Y")}"
+   puts "#{Time.now.strftime("%A the %dth of %B %Y")}"
   end
   puts "(#{Time.now.strftime("%m/%d/%Y")})"
  end
@@ -50,7 +54,52 @@ class Helpers
  end
  end
  
+ def self.cal
+  require "green_shoes"
+  Shoes.app do
+   title "Calendar Events"
+   events = ["Sidney", "Call Bob"]
+   events.each do |e|
+    para e
+   end
+  end
+ end
+ 
+ def self.calc(a, b, c)
+ puts "Calc(ulator) is not yet available."#a.to_i b.to_i c.to_i
+  case ARGV[2]
+   when "jared"
+    puts "multiplication is broken"
+    puts ARGV[1].to_f * ARGV[3].to_f
+   when "+"
+    puts ARGV[1].to_i + ARGV[3].to_i
+   when "-"
+    puts ARGV[1].to_f - ARGV[3].to_f
+   when "/"
+    puts ARGV[1].to_f / ARGV[3].to_f
+   end
+ end
+ 
+ def self.deamon
+ loop do
+  keypress do |a|
+   if a == "\n"
+    Shoes.app do
+     title "Jared Services"
+     para "something"
+     list do
+      end
+     end
+    end
+   end
+   sleep(0.1)
+  end
+ end
+ 
  def self.notfound
   puts "Error: Command '#{ARGV[0]}' not found."
+  puts "Time - 04:12pm"
+  puts "Date - Tuesday the 22nd of December 2012"
+  puts "calc - 22 / 2"
  end
 end

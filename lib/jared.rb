@@ -1,4 +1,6 @@
 require 'etc'
+require 'sys/uname'
+ include Sys
 #require_relative "jared/lib.rb"
 require "jared/lib"
 
@@ -35,8 +37,17 @@ when "hi", "hello"
  Helpers.greeting
 
 when "view"
- puts "View is not yet available."
- #system("#{Dir.pwd}/#{ARGV[1]}")
+ puts "Opening #{ARGV[1]}"
+ if Uname.sysname == "Linux"
+  system("xdg-open #{Dir.pwd}/#{ARGV[1]}")
+ elsif Uname.sysname == "Windows"
+  system("\"#{Dir.pwd}/#{ARGV[1]}\"")
+ else
+  puts "Your system is not supported."
+ end
+ 
+when "calc", "calculator"
+ Helpers.calc(a=ARGV[1], b=ARGV[2], c=ARGV[3])
  
 when "clock"
  Jared.clock
@@ -46,13 +57,16 @@ when "date"
  
 when "cal", "calendar"
  puts "Calendar is not yet available."
+ Helpers.cal
  
 when "task"
  puts "Task is not yet available."
  
 when "day"
 
-when ""
+when "deamon"
+puts "Deamon is not yet available."
+Helpers.deamon
 
 when "time"
  puts Jared.time
