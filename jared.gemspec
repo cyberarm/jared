@@ -21,4 +21,7 @@ Gem::Specification.new do |s|
   # s.add_development_dependency ""
   s.add_runtime_dependency "green_shoes"
   s.add_runtime_dependency "sys-uname"
+  s.add_runtime_dependency "activerecord"
+  s.add_runtime_dependency "sqlite3"
+  s.add_runtime_dependency "launchy"
 end

@@ -1,8 +1,27 @@
 require 'etc'
+require "fileutils"
 require 'sys/uname'
+require 'launchy'
+require 'sqlite3'
+require 'active_record'
  include Sys
-#require_relative "jared/lib.rb"
-require "jared/lib"
+require_relative "jared/lib.rb"
+#require "jared/lib"
+
+ActiveRecord::Base.establish_connection(
+ :adapter => 'sqlite3',
+ :database => "#{Etc.getpwuid.dir}/.jared.sqlite3")
+
+unless File.exist?("#{Etc.getpwuid.dir}/.jared.sqlite3")
+ ActiveRecord::Schema.define do
+  create_table :tasks do |t|
+   t.column :title, :string
+   t.column :desciption, :string
+   t.column :due, :string
+   t.timestamps
+  end
+ end
+end
 
 begin
  require "green_shoes"
@@ -33,10 +52,10 @@ class Jared
 end
 
 case ARGV[0]
-when "hi", "hello"
+when "hi", "Hi", "hello", "Hello"
  Helpers.greeting
 
-when "view"
+when "view", "View"
  puts "Opening #{ARGV[1]}"
  if Uname.sysname == "Linux"
   system("xdg-open #{Dir.pwd}/#{ARGV[1]}")
@@ -46,30 +65,44 @@ when "view"
   puts "Your system is not supported."
  end
  
-when "calc", "calculator"
+when "calc", "Calc", "calculator", "Calculator"
  Helpers.calc(a=ARGV[1], b=ARGV[2], c=ARGV[3])
  
-when "clock"
+when "clock", "Clock"
  Jared.clock
  
-when "date"
+when "date", "Date"
  Jared.date
  
-when "cal", "calendar"
+when "cal", "Cal", "calendar", "Calendar"
  puts "Calendar is not yet available."
- Helpers.cal
+ if Dir.pwd.include?("/home/#{Etc.getlogin}/jared")
+  Helpers.cal
+ end
  
-when "task"
+when "task", "Task"
  puts "Task is not yet available."
+ Helpers.task
  
-when "day"
+when "day", "Day"
+ puts Time.now.strftime("%A")
 
-when "deamon"
+when "deamon", "Deamon"
 puts "Deamon is not yet available."
 Helpers.deamon
 
-when "time"
+when "time", "Time"
  puts Jared.time
+ 
+when "whatis", "Whatis"
+ Helpers.define(ARGV[1])
+ 
+when "whereis", "Whereis"
+ Helpers.map
+ 
+when "create", "Create"
+ Helpers.create
+  
 else
  Helpers.notfound
 end

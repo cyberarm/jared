@@ -88,7 +88,7 @@ class Helpers
  :adapter => 'sqlite3',
  :database => "#{Etc.getpwuid.dir}/.jared.sqlite3")
   require "green_shoes"
-  require "jared/models/task.rb"
+  require "jared/models/task"
   Shoes.app title: "Jared Tasks" do
    title "Tasks"
       button "add task" do
