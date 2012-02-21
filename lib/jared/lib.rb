@@ -121,7 +121,7 @@ class Helpers
      para t.desciption
      tagline "Due:"
      para t.due
-     button "Edit" do
+     button "Edit", state: "disabled" do
       Shoes.app  title: "Editing Task: #{t.title}", width: 250, height: 400 do
       title "edit task"
        stack do
