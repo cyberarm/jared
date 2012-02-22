@@ -29,6 +29,8 @@ class Helpers
    puts "#{Time.now.strftime("%A the %dst of %B %Y")}"
   elsif Time.now.strftime("%d") == "21"
    puts "#{Time.now.strftime("%A the %dst of %B %Y")}"
+  elsif Time.now.strftime("%d") == "31"
+   puts "#{Time.now.strftime("%A the %dst of %B %Y")}"
   else
    puts "#{Time.now.strftime("%A the %dth of %B %Y")}"
   end
@@ -121,7 +123,7 @@ class Helpers
      para t.desciption
      tagline "Due:"
      para t.due
-     button "Edit", state: "disabled" do
+     button "Edit", state: "nil" do
       Shoes.app  title: "Editing Task: #{t.title}", width: 250, height: 400 do
       title "edit task"
        stack do
@@ -134,6 +136,7 @@ class Helpers
         button "update Task" do
          task = Task.find(t.id)
          @edit_task = task.update_attributes(:title => @title.text, :desciption => @desciption.text, :due => @due.text)
+         close
         end
        end
       end
