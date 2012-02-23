@@ -56,8 +56,6 @@
   Google's the definition of the word.
 
   Usage: jared whatis glass
-
-  A cup.
   ```
   
 * Whereis
@@ -74,10 +72,10 @@
 
   ```
   Not yet implemented.
+  
+  Manage your appointments.
 
   Usage: jared cal
-
-  Manage your appointments.
   ```
   
 * Task
