@@ -51,6 +51,8 @@
 * Whatis
 
   ```
+  Not yet implemented.
+  
   Google's the definition of the word.
 
   Usage: jared whatis glass
