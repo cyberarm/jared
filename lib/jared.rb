@@ -10,9 +10,9 @@ require_relative "jared/lib.rb"
 
 ActiveRecord::Base.establish_connection(
  :adapter => 'sqlite3',
- :database => "#{Etc.getpwuid.dir}/.jared.sqlite3")
+ :database => "#{Gem.loaded_specs['jared'].full_gem_path}/.jared.sqlite3")
 
-unless File.exist?("#{Etc.getpwuid.dir}/.jared.sqlite3")
+unless File.exist?("#{Gem.loaded_specs['jared'].full_gem_path}/.jared.sqlite3")
  ActiveRecord::Schema.define do
   create_table :tasks do |t|
    t.column :title, :string

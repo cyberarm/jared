@@ -88,7 +88,7 @@ class Helpers
  def self.task
  ActiveRecord::Base.establish_connection(
  :adapter => 'sqlite3',
- :database => "#{Etc.getpwuid.dir}/.jared.sqlite3")
+ :database => "#{Gem.loaded_specs['jared'].full_gem_path}/.jared.sqlite3")
   require "green_shoes"
   require_relative "models/task.rb"
   Shoes.app title: "Jared Tasks" do
