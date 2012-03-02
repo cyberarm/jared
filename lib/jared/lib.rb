@@ -2,7 +2,7 @@ class Helpers
  def self.clock
   begin 
    require "green_shoes"
-   Shoes.app width: 300,  height: 70, title: "Jared Clock" do
+   Shoes.app width: 400,  height: 70, title: "Jared Clock" do
     @clock = stack do
      title "#{Time.now.strftime("%I:%M:%P")}"
     end
@@ -88,7 +88,7 @@ class Helpers
  def self.task
  ActiveRecord::Base.establish_connection(
  :adapter => 'sqlite3',
- :database => "#{Gem.loaded_specs['jared'].full_gem_path}/.jared.sqlite3")
+ :database => "#{Dir.home}/.jared.sqlite3")
   require "green_shoes"
   require_relative "models/task.rb"
   Shoes.app title: "Jared Tasks" do
@@ -225,11 +225,15 @@ class Helpers
  end
  
  def self.map
-  print "search Gmaps for > "
+  print "search Gmaps for >"
   @m = STDIN.gets.chomp
   puts "Opening Gmaps in default browser."
   puts "#{@m}"
+  if Uname.sysname.include?("Windows")
+   puts "Unavailable on Windows. :("
+  else
   Launchy.open("http://maps.google.com/?q=#{@m}")
+  end
  end
  
  def self.notfound

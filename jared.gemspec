@@ -3,19 +3,19 @@ $:.push File.expand_path("../lib", __FILE__)
 require "jared/version"
 
 Gem::Specification.new do |s|
-  s.name        = "jared"
-  s.version     = Jared::VERSION
-  s.authors     = ["Cyber"]
-  s.email       = ["matthewlikesrobots@gmail.com"]
-  s.homepage    = "https://github.com/cyberarm/jared"
-  s.summary     = "Ruby powered digital assistant"
+  s.name = "jared"
+  s.version = Jared::VERSION
+  s.authors = ["Cyber"]
+  s.email = ["matthewlikesrobots@gmail.com"]
+  s.homepage = "https://github.com/cyberarm/jared"
+  s.summary = "Ruby powered digital assistant"
   s.description = "Ruby powered digital assistant"
 
   s.rubyforge_project = "jared"
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+  s.files = `git ls-files`.split("\n")
+  s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib", "bin"]
 
   # s.add_development_dependency ""

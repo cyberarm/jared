@@ -10,9 +10,9 @@ require_relative "jared/lib.rb"
 
 ActiveRecord::Base.establish_connection(
  :adapter => 'sqlite3',
- :database => "#{Gem.loaded_specs['jared'].full_gem_path}/.jared.sqlite3")
+ :database => "#{Dir.home}/.jared.sqlite3")
 
-unless File.exist?("#{Gem.loaded_specs['jared'].full_gem_path}/.jared.sqlite3")
+unless File.exist?("#{Dir.home}/.jared.sqlite3")
  ActiveRecord::Schema.define do
   create_table :tasks do |t|
    t.column :title, :string
@@ -57,9 +57,9 @@ when "hi", "Hi", "hello", "Hello"
 
 when "view", "View"
  puts "Opening #{ARGV[1]}"
- if Uname.sysname == "Linux"
+ if Uname.sysname.include?("Linux")
   system("xdg-open #{Dir.pwd}/#{ARGV[1]}")
- elsif Uname.sysname == "Windows"
+ elsif Uname.sysname.include?("Windows")
   system("\"#{Dir.pwd}/#{ARGV[1]}\"")
  else
   puts "Your system is not supported."
