@@ -98,7 +98,11 @@ when "whatis", "Whatis"
  Helpers.define(ARGV[1])
  
 when "whereis", "Whereis"
- Helpers.map
+ if Uname.sysname.include?("Windows")
+  puts "Function unavailable on Windows do to Launchy malfunctioning. Sorry :("
+ else
+  Helpers.map
+ end
  
 when "create", "Create"
  Helpers.create
