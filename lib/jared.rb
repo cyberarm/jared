@@ -5,8 +5,8 @@ require 'launchy'
 require 'sqlite3'
 require 'active_record'
  include Sys
-require_relative "jared/lib.rb"
-#require "jared/lib"
+#require_relative "jared/lib.rb"
+require "jared/lib"
 
 ActiveRecord::Base.establish_connection(
  :adapter => 'sqlite3',
@@ -56,10 +56,11 @@ when "hi", "Hi", "hello", "Hello"
  Helpers.greeting
 
 when "view", "View"
- puts "Opening #{ARGV[1]}"
  if Uname.sysname.include?("Linux")
+  puts "Opening #{ARGV[1]}"
   system("xdg-open #{Dir.pwd}/#{ARGV[1]}")
  elsif Uname.sysname.include?("Windows")
+  puts "Opening #{ARGV[1]}"
   system("\"#{Dir.pwd}/#{ARGV[1]}\"")
  else
   puts "Your system is not supported."
