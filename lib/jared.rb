@@ -1,18 +1,26 @@
+#!/bin/ruby
+
 require 'etc'
 require "fileutils"
 require 'sys/uname'
 require 'launchy'
 require 'sqlite3'
 require 'active_record'
+require 'google_weather'
+require 'gmail'
  include Sys
-#require_relative "jared/lib.rb"
-require "jared/lib"
 
-ActiveRecord::Base.establish_connection(
- :adapter => 'sqlite3',
- :database => "#{Dir.home}/.jared.sqlite3")
+begin
+ require "green_shoes"
+rescue LoadError
+ puts "Please install 'green_shoes' for more functionality"
+end
 
 unless File.exist?("#{Dir.home}/.jared.sqlite3")
+puts "Setting up database."
+ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => "#{Dir.home}/.jared.sqlite3")
+ActiveRecord::Migration.verbose = false
+
  ActiveRecord::Schema.define do
   create_table :tasks do |t|
    t.column :title, :string
@@ -21,12 +29,29 @@ unless File.exist?("#{Dir.home}/.jared.sqlite3")
    t.timestamps
   end
  end
+
+ ActiveRecord::Schema.define do
+  create_table :users do |t|
+   t.column :name, :string
+   t.column :zip, :string
+   t.column :mail_username, :string
+   t.column :mail_password, :string
+   t.column :mail_provider,  :string
+   t.timestamps
+  end
+ end
 end
 
-begin
- require "green_shoes"
-rescue LoadError
- puts "Please install 'green_shoes' for more functionality"
+require_relative "jared/lib.rb"
+#require "jared/lib"
+if User.first.blank?
+ c=confirm "Setup Jared?"
+ if c == true
+ Helpers.config
+ sleep(3)
+ alert 'opening'
+ Helpers.config
+ end
 end
 
 class Jared
@@ -61,7 +86,7 @@ when "view", "View"
   system("xdg-open #{Dir.pwd}/#{ARGV[1]}")
  elsif Uname.sysname.include?("Windows")
   puts "Opening #{ARGV[1]}"
-  system("\"#{Dir.pwd}/#{ARGV[1]}\"")
+  system("call \"#{Dir.pwd}/#{ARGV[1]}\"")
  else
   puts "Your system is not supported."
  end
@@ -75,11 +100,12 @@ when "clock", "Clock"
 when "date", "Date"
  Jared.date
  
+when "config", "Config", "configure", "Configure"
+Helpers.config
+ 
 when "cal", "Cal", "calendar", "Calendar"
  puts "Calendar is not yet available."
- if Dir.pwd.include?("/home/#{Etc.getlogin}/jared")
   Helpers.cal
- end
  
 when "task", "Task"
  puts "Task is not yet available."
@@ -89,7 +115,7 @@ when "day", "Day"
  puts Time.now.strftime("%A")
 
 when "deamon", "Deamon"
-puts "Deamon is not yet available."
+#puts "Deamon is not yet available."
 Helpers.deamon
 
 when "time", "Time"
@@ -107,6 +133,9 @@ when "whereis", "Whereis"
  
 when "create", "Create"
  Helpers.create
+ 
+when "weather", "Weather"
+ Helpers.weather(ARGV[1])
   
 else
  Helpers.notfound

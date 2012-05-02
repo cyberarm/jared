@@ -24,5 +24,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "activerecord"
   s.add_runtime_dependency "sqlite3"
   s.add_runtime_dependency "launchy"
-  #s.add_runtime_dependency "wordnik"
+  s.add_runtime_dependency 'google-weather'
+  s.add_runtime_dependency 'gmail'
 end

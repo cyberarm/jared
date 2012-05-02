@@ -1,10 +1,12 @@
 class Helpers
  def self.task
+ Lib.db
+ 
  ActiveRecord::Base.establish_connection(
  :adapter => 'sqlite3',
  :database => "#{Dir.home}/.jared.sqlite3")
   require "green_shoes"
-  require_relative "models/task.rb"
+  #require_relative "../models/task.rb"
   Shoes.app title: "Jared Tasks" do
    title "Tasks"
       button "add task" do
