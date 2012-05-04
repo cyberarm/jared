@@ -1,5 +1,6 @@
 class Helpers
- # == Date and Time
+ # Date and Time
+ #
  # _jared_ _time_ returns the current time.
  #
  #e.g.

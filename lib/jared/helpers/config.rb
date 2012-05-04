@@ -8,11 +8,11 @@ Lib.db
    @user = User.first
    if @user.blank?
     button "Create profile" do
-	 new_user = User.new(:name => "#{Etc.getlogin}", :zip => "00000")
+	 new_user = User.new(:name => "#{Etc.getlogin}", :zip => "10001")
 	 new_user.save
-	 if new_user
-	  alert "Success. Rerun command `jared config` to continue."
-	  close
+	 if new_user == true
+	 exit
+	 Helpers.config
 	 else
 	  alert "Failed. Retry."
 	end

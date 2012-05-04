@@ -1,22 +1,25 @@
-# Deamon
+# = Deamon
 # TODO: run every x minutes on Linux and Windows
 
 class Deamon
  Lib.db
-
+ # TODO: Add tasks to deamon
  def self.task
-  # TODO: Add tasks to deamon
   puts "Jared Tasks"
   puts "0 Tasks due today."
- end
+ end  
+ # TODO: add appointments to deamon
+ #
+ # NOTE: Research Google Calendar
  def self.appointment
-  # TODO: add appointments to deamon
   puts "Jared Calendar"
-  puts "0 Appointments due today."
+  puts "0 Appointments occurring today."
+  puts "Google Calendar"
+  puts "x Appointments occurring today"
  end
+ # TODO:
+ # limit messages to lastest 15
  def self.message
-  # TODO: add messages(emails) to deamon
-  # limit to lastest 15 messages
   @user = User.first
   Gmail.connect(@user.mail_username, @user.mail_password) do |gmail|
    puts "Google Mail"
@@ -31,6 +34,7 @@ class Deamon
 end
 
 class Helpers
+# Checks every 60 seconds for, Tasks, Appointments, Emails.
  def self.deamon
   loop do
     Deamon.task

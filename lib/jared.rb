@@ -8,6 +8,7 @@ require 'sqlite3'
 require 'active_record'
 require 'google_weather'
 require 'gmail'
+require 'time'
  include Sys
 
 begin
@@ -45,12 +46,11 @@ end
 require_relative "jared/lib.rb"
 #require "jared/lib"
 if User.first.blank?
+ new_user = User.new(:name => "#{Etc.getlogin}", :zip => "10001")
  c=confirm "Setup Jared?"
  if c == true
- Helpers.config
- sleep(3)
- alert 'opening'
- Helpers.config
+  Helpers.config
+ else
  end
 end
 
