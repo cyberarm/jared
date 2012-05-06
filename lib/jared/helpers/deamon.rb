@@ -1,6 +1,6 @@
-# = Deamon
-# TODO: run every x minutes on Linux and Windows
-
+# == Deamon
+#
+# Functions for deamon command.
 class Deamon
  Lib.db
  # TODO: Add tasks to deamon
@@ -17,32 +17,83 @@ class Deamon
   puts "Google Calendar"
   puts "x Appointments occurring today"
  end
- # TODO:
- # limit messages to lastest 15
+ # Actually checks mail.
  def self.message
+ begin
   @user = User.first
-  Gmail.connect(@user.mail_username, @user.mail_password) do |gmail|
+  if @user.mail_username.blank?
+   puts "Jared is not configured to check email."
+   puts "Please run, 'jared config'"
+   Kernel.exit
+  elsif @user.mail_password.blank?
+   puts "Jared is not configured to check email."
+   puts "Please run, 'jared config'"
+   Kernel.exit
+  else
+  cipher = Gibberish::AES.new(@user.mail_username)
+  password = cipher.dec(@user.mail_password)
+  Gmail.connect(@user.mail_username, password) do |gmail|
+   if gmail.logged_in?
+   if gmail.inbox.count(:unread) == 0
+   else
    puts "Google Mail"
    puts gmail.inbox.count(:unread).to_s + " Unread messages."
-   gmail.inbox.emails(:unread).each do |email|
+
+   gmail.inbox.emails(:unread).first(15).each do |email|
     email.unread!
 	print "From:",email.sender[0].mailbox,"@", email.sender[0].host, ", Subject:",email.subject
 	puts
+	puts
+    end
+	end
+	else
+	puts "Failed to login."
+	Kernel.exit
+	 end
+    end
    end
+  end
+    rescue => e
+	if e.to_s.include?("mail_")
+	 puts "Jared is not configured to check email."
+	 puts "Please run, 'jared config' or click 'OK' on the popup."
+	 Kernel.exit
   end
  end
 end
 
 class Helpers
 # Checks every 60 seconds for, Tasks, Appointments, Emails.
+#
+# Usage: <em>jared deamon (task/cal/mail)</em>
  def self.deamon
-  loop do
-    Deamon.task
+  if ARGV[1] == nil
+    loop do
+     Deamon.task
+     Deamon.appointment
+     Deamon.message
+	 puts
+	 puts
+	 sleep(60)
+    end
+  elsif ARGV[1] == "cal" || ARGV[1] == "calendar"
+   loop do
     Deamon.appointment
-    Deamon.message
-	puts
 	puts
 	sleep(60)
+   end
+  elsif ARGV[1] == 'mail'
+   Helpers.mail
+   loop do
+    Deamon.message
+    sleep(60)
+   end
+   elsif ARGV[1] == "task"
+    loop do
+     Deamon.task
+	 puts
+	 sleep(60)
+	end
    end
   end
  end

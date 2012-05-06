@@ -1,21 +1,17 @@
 #!/bin/ruby
-
+require "faster_require"
 require 'etc'
 require "fileutils"
 require 'sys/uname'
 require 'launchy'
+require 'green_shoes'
 require 'sqlite3'
 require 'active_record'
 require 'google_weather'
 require 'gmail'
 require 'time'
+require 'gibberish'
  include Sys
-
-begin
- require "green_shoes"
-rescue LoadError
- puts "Please install 'green_shoes' for more functionality"
-end
 
 unless File.exist?("#{Dir.home}/.jared.sqlite3")
 puts "Setting up database."
@@ -45,6 +41,7 @@ end
 
 require_relative "jared/lib.rb"
 #require "jared/lib"
+Lib.db
 if User.first.blank?
  new_user = User.new(:name => "#{Etc.getlogin}", :zip => "10001")
  c=confirm "Setup Jared?"
@@ -60,22 +57,8 @@ class Jared
    puts "#{Time.now.strftime("%I:%M:%S%P")}"
   end
  end
- 
- def self.date
-  Helpers.date
- end
- 
- def self.clock
-  begin 
-   require "green_shoes"
-   Helpers.clock
-  rescue LoadError
-   puts "Error: Clock requires 'green_shoes'"
-  end
- end
- 
 end
-
+ 
 case ARGV[0]
 when "hi", "Hi", "hello", "Hello"
  Helpers.greeting
@@ -92,13 +75,13 @@ when "view", "View"
  end
  
 when "calc", "Calc", "calculator", "Calculator"
- Helpers.calc(a=ARGV[1], b=ARGV[2], c=ARGV[3])
+ Helpers.calc
  
 when "clock", "Clock"
- Jared.clock
+ Helpers.clock
  
 when "date", "Date"
- Jared.date
+ Helpers.date
  
 when "config", "Config", "configure", "Configure"
 Helpers.config
@@ -136,6 +119,9 @@ when "create", "Create"
  
 when "weather", "Weather"
  Helpers.weather(ARGV[1])
+ 
+when "mail", "Mail"
+ Helpers.mail
   
 else
  Helpers.notfound

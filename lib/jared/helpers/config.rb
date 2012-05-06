@@ -1,6 +1,6 @@
 class Helpers
 Lib.db
-
+# Opens a Green Shoes window to configure your name, zipcode, gmail username, gmail password.
  def self.config
   Shoes.app title: "Jared - Configuration", height: 300, width: 500 do
    background "#333".."#666"
@@ -27,7 +27,9 @@ Lib.db
 	para 'Your Gmail password (Will be encrypted)'
 	@password = edit_line "#{@user.mail_password}", secret: true
 	button "Save" do
-	  update_user = @user.update_attributes(:name => @name.text, :zip => @zip.text, :mail_username => @mail.text, :mail_password => @password.text)
+	  cipher = Gibberish::AES.new(@mail.text)
+	  @secret = cipher.enc(@password.text)
+	  update_user = @user.update_attributes(:name => @name.text, :zip => @zip.text, :mail_username => @mail.text, :mail_password => @secret)
 	  if update_user == true
 	   alert "Saved."
 	   close

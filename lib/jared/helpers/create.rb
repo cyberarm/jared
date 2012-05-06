@@ -1,4 +1,9 @@
 class Helpers
+ # Creates a File or Folder.
+ #
+ # Usage:
+ #
+ # <em>jared create file/folder/dir</em>
  def self.create
    begin
    if ARGV[1].include?("folder")

@@ -64,3 +64,14 @@ However, thats a **long** ways down the road, but start Jared small and work up 
   Opens a Green Shoes window for managing Tasks.
 
   Usage: jared task
+
+### Weather
+  Check you local weather information.
+
+  Usage: jared weather (today/tomorrow/forecast)
+### Deamon
+  Run mail/task/appointment check every 60 seconds.
+  
+  Usage: jared deamon (mail/task/cal(endar))
+  
+  (if there is no second argument it'll check all three every 60 seconds.)

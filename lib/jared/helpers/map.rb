@@ -1,4 +1,7 @@
 class Helpers
+ #TODO: Get this working on windows.
+ #
+ # TODO: make command work it this: <em>jared map -m "Walmart"</em> instead of using gets.
  def self.map
   print "search Gmaps for >"
   @m = STDIN.gets.chomp

@@ -1,4 +1,5 @@
 class Helpers
+ # Opens a Green Shoes app to manage tasks.
  def self.task
  Lib.db
  

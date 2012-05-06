@@ -1,4 +1,6 @@
 class Helpers
+Lib.db
+ # Dynamically greets the user by time when <em>jared hi/hello</em> is run.
  def self.greeting
    if Time.now.strftime("%H").to_i < "04".to_i
   puts "Go tee bed."
