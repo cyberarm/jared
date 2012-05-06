@@ -26,4 +26,6 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "launchy"
   s.add_runtime_dependency 'google-weather'
   s.add_runtime_dependency 'gmail'
+  s.add_runtime_dependency 'gibberish'
+  s.add_runtime_dependency 'faster_require'
 end
