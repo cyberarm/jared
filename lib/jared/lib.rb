@@ -7,7 +7,7 @@ class Lib
  end
 end
 
-#path = Gem::Specification.find_by_name("jared")
+path = Gem::Specification.find_by_name("jared")
 
 # Model files requires
 #Dir["#{path.gem_dir}/lib/jared/models/*.rb"].each {|file| require file }
