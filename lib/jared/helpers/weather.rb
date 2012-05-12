@@ -28,7 +28,7 @@ Lib.db
  # Checks weather.
  #
  # Usage: <em>jared weather (10001/today/tomorrow/forecast)</em>
- def self.weather(zip)
+ def self.weather
   begin
    weather = GoogleWeather.new(@user.zip)
 

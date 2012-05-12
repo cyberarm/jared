@@ -4,16 +4,14 @@ class Jared < Thor
  default_task :hi
 
  desc "time", "Gets the current time."
- def time(t="now")
-  if t == "now"
-   puts "#{Time.now.strftime("%I:%M:%S%P")}"
-  end
+ def time
+  puts "#{Time.now.strftime("%I:%M:%S%P")}"
  end
  
- desc "weather ZIP", "Gets the current weather."
- def weather(zip=nil)
+ desc "weather", "Gets the current weather."
+ def weather
   require 'google_weather'
-  Helpers.weather(zip) 
+  Helpers.weather
  end
  
  desc "clock", "Open a Green Shoes powered clock."
@@ -87,7 +85,7 @@ class Jared < Thor
   puts 'For usage information try: jared help or jared --help'
  end
  
- desc "cal", "Cal"
+ desc "cal", "Calendar"
  def cal
   puts "Calendar is not yet available."
   require 'green_shoes'
