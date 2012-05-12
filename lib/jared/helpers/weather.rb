@@ -30,7 +30,7 @@ Lib.db
  # Usage: <em>jared weather (10001/today/tomorrow/forecast)</em>
  def self.weather(zip)
   begin
-    weather = GoogleWeather.new(@user.zip)
+   weather = GoogleWeather.new(@user.zip)
 
   if ARGV[1] == nil
    forecast = weather.current_conditions

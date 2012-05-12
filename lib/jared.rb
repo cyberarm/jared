@@ -2,9 +2,9 @@
 require "faster_require"
 require 'etc'
 require "fileutils"
-require 'sys/uname'
 require 'sqlite3'
 require 'active_record'
+require 'sys/uname'
  include Sys
 
 unless File.exist?("#{Dir.home}/.jared.sqlite3")

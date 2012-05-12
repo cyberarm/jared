@@ -1,86 +1,105 @@
+require 'thor'
+
 class Jared < Thor
- def self.time(t="now")
+ default_task :hi
+
+ desc "time", "Gets the current time."
+ def time(t="now")
   if t == "now"
    puts "#{Time.now.strftime("%I:%M:%S%P")}"
   end
  end
-end
  
-case ARGV[0]
-when "hi", "Hi", "hello", "Hello"
- Helpers.greeting
-
-when "view", "View"
- if Uname.sysname.include?("Linux")
-  puts "Opening #{ARGV[1]}"
-  system("xdg-open #{Dir.pwd}/#{ARGV[1]}")
- elsif Uname.sysname.include?("Windows")
-  puts "Opening #{ARGV[1]}"
-  system("call \"#{Dir.pwd}/#{ARGV[1]}\"")
- else
-  puts "Your system is not supported."
+ desc "weather ZIP", "Gets the current weather."
+ def weather(zip=nil)
+  require 'google_weather'
+  Helpers.weather(zip) 
  end
  
-when "calc", "Calc", "calculator", "Calculator"
- Helpers.calc
+ desc "clock", "Open a Green Shoes powered clock."
+ def clock
+  require 'green_shoes'
+  Helpers.clock
+ end
  
-when "clock", "Clock"
- require 'green_shoes'
- Helpers.clock
+ desc "create TYPE NAME", "create"
+ def create(type,name)
+  Helpers.create
+ end
  
-when "date", "Date"
- Helpers.date
- 
-when "config", "Config", "configure", "Configure"
- require 'green_shoes'
- Helpers.config
- 
-when "cal", "Cal", "calendar", "Calendar"
- require 'green_shoes'
- puts "Calendar is not yet available."
- Helpers.cal
- 
-when "task", "Task"
- require 'green_shoes'
- puts "Task is not yet available."
- Helpers.task
- 
-when "day", "Day"
- puts Time.now.strftime("%A")
-
-when "deamon", "Deamon"
- require 'gmail'
- require 'google_weather'
- require 'gibberish'
- #puts "Deamon is not yet available."
- Helpers.deamon
-
-when "time", "Time"
- puts Jared.time
- 
-when "whatis", "Whatis"
- Helpers.define(ARGV[1])
- 
-when "whereis", "Whereis"
+ desc "whereis PLACE", "whereis"
+ def whereis(place)
   require 'launchy'
-# if Uname.sysname.include?("Windows")
-#  puts "Function unavailable on Windows do to Launchy malfunctioning. Sorry :("
-# else
   Helpers.map
-# end
+ end
  
-when "create", "Create"
- Helpers.create
+ desc "day", "Day"
+ def day
+  puts Time.now.strftime("%A")
+ end
  
-when "weather", "Weather"
- require 'google_weather'
- Helpers.weather(ARGV[1])
+ desc "whatis WORD", "whatis"
+ def whatis(word)
+  Helpers.define(word)
+ end
  
-when "mail", "Mail"
- require 'gmail'
- require 'gibberish'
- Helpers.mail
-  
-else
- Helpers.notfound
+ desc "deamon FUNCTION", "Checks every minute for mail"
+ def deamon(function=nil)
+  require 'gmail'
+  require 'gibberish'
+  Helpers.deamon
+ end
+ 
+ desc "task", "Task"
+ def task
+  require 'green_shoes'
+  puts "Task is not yet available."
+  Helpers.task
+ end
+ 
+ desc "config", "Jared settings."
+ def config
+  require 'green_shoes'
+  Helpers.config
+ end
+ 
+ desc "view FILENAME", "View path/to/file.png in system viewer."
+ def view(filename)
+  if Uname.sysname.include?("Linux")
+   puts "Opening #{filename}"
+   system("xdg-open #{Dir.pwd}/#{filename}")
+  elsif Uname.sysname.include?("Windows")
+   puts "Opening #{filename}"
+   system("call \"#{Dir.pwd}/#{filename}\"")
+  else
+   puts "Your system is not supported."
+  end
+ end
+ 
+ desc "date", "Gets the current date."
+ def date
+  Helpers.date
+ end
+ 
+ desc "hi", "Greetings"
+ def hi
+  Helpers.greeting
+  puts 'For usage information try: jared help or jared --help'
+ end
+ 
+ desc "cal", "Cal"
+ def cal
+  puts "Calendar is not yet available."
+  require 'green_shoes'
+  Helpers.cal
+ end
+ 
+ desc "mail", "Checks your mailbox for new mails."
+ def mail
+  require 'gmail'
+  require 'gibberish'
+  Helpers.mail
+ end
 end
+
+Jared.start
