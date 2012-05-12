@@ -68,10 +68,11 @@ class Helpers
 # Usage: <em>jared deamon (task/cal/mail)</em>
  def self.deamon
   if ARGV[1] == nil
+    Helpers.mail
     loop do
+     Deamon.message
      Deamon.task
      Deamon.appointment
-     Deamon.message
 	 puts
 	 puts
 	 sleep(60)
