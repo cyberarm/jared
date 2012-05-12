@@ -82,7 +82,7 @@ class Jared < Thor
  desc "hi", "Greetings"
  def hi
   Helpers.greeting
-  puts 'For usage information try: jared help or jared --help'
+  puts 'For usage information use `jared help`'
  end
  
  desc "cal", "Calendar"
