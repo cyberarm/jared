@@ -28,7 +28,7 @@ class Jared < Thor
  desc "whereis PLACE", "whereis"
  def whereis(place)
   require 'launchy'
-  Helpers.map
+  Helpers.map(place)
  end
  
  desc "day", "Day"
