@@ -9,9 +9,9 @@ class Jared < Thor
  end
  
  desc "weather", "Gets the current weather."
- def weather
+ def weather(option=nil)
   require 'google_weather'
-  Helpers.weather
+  Helpers.weather(option)
  end
  
  desc "clock", "Open a Green Shoes powered clock."

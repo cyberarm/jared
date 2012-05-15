@@ -28,41 +28,41 @@ Lib.db
  # Checks weather.
  #
  # Usage: <em>jared weather (10001/today/tomorrow/forecast)</em>
- def self.weather
+ def self.weather(option=nil)
   begin
    weather = GoogleWeather.new(@user.zip)
 
-  if ARGV[1] == nil
+  if option == nil
    forecast = weather.current_conditions
-   puts weather.forecast_information.city
-   puts forecast.temp_f + " Degrees Fahrenheit", forecast.temp_c + " Degrees Celsius", forecast.condition, forecast.wind_condition, forecast.humidity
+   puts weather.forecast_information.city + "."
+   puts forecast.temp_f + " Degrees Fahrenheit.", forecast.temp_c + " Degrees Celsius.", forecast.condition + ".", forecast.wind_condition + ".", forecast.humidity + "."
    
-  elsif ARGV[1] == "today"
+  elsif option == "today"
    weather.forecast_conditions.each do |condition|
     if condition.day_of_week == Time.now.strftime("%a")
      puts Time.now.strftime("%A")
-     puts " #{condition.condition}"
-     puts " High: #{condition.high} Degrees Fahrenheit"
-     puts " Low: #{condition.low} Degrees Fahrenheit"
+     puts " #{condition.condition}."
+     puts " High: #{condition.high} Degrees Fahrenheit."
+     puts " Low: #{condition.low} Degrees Fahrenheit."
 	end
    end
    
-  elsif ARGV[1] == "tomorrow"
+  elsif option == "tomorrow"
    weather.forecast_conditions.each do |condition|
     if condition.day_of_week == $day
      puts $dn
-     puts " #{condition.condition}"
-     puts " High: #{condition.high} Degrees Fahrenheit"
-     puts " Low: #{condition.low} Degrees Fahrenheit"
+     puts " #{condition.condition}."
+     puts " High: #{condition.high} Degrees Fahrenheit."
+     puts " Low: #{condition.low} Degrees Fahrenheit."
 	end
    end
    
-  elsif ARGV[1] == "forecast"
+  elsif option == "forecast"
    weather.forecast_conditions.each do |condition|
-    puts "#{condition.day_of_week}"
-    puts " #{condition.condition}"
-    puts " High: #{condition.high} Degrees Fahrenheit"
-    puts " Low: #{condition.low} Degrees Fahrenheit"
+    puts "#{condition.day_of_week}."
+    puts " #{condition.condition}."
+    puts " High: #{condition.high} Degrees Fahrenheit."
+    puts " Low: #{condition.low} Degrees Fahrenheit."
    end
   else
    puts "Unable to fetch weather due to argument error."
