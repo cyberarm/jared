@@ -6,6 +6,8 @@ However, thats a **long** ways down the road, starting Jared small and working s
 ## Install Jared
 You can get the lasest stable release on RubyGems via *gem install jared*
 
+You can also get the unstable version from <a href="https://github.com/cyberarm/jared">github</a>.
+
 ## Usage
 
 ### Clock
@@ -77,9 +79,7 @@ You can get the lasest stable release on RubyGems via *gem install jared*
 ### Whereis
   Opens Gmaps in default browser.
 
-  Usage: jared whereis
-
-  Search Gmaps for > Walmart
+  Usage: jared whereis PLACE
  
 ### View
   Opens the file in the system viewer.
