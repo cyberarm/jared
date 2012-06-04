@@ -16,7 +16,7 @@ ActiveRecord::Migration.verbose = false
   create_table :tasks do |t|
    t.column :title, :string
    t.column :desciption, :string
-   t.column :due, :string
+   t.column :due, :datetime
    t.timestamps
   end
  end
@@ -37,6 +37,7 @@ require_relative "jared/lib.rb"
 #require "jared/lib"
 Lib.db
 if User.first.blank?
+ require 'green_shoes'
  new_user = User.new(:name => "#{Etc.getlogin}", :zip => "10001")
  c=confirm "Setup Jared?"
  if c == true
