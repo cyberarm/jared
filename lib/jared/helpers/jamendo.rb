@@ -1,5 +1,27 @@
 class Helpers
-  def self.jamendo(mode='loop')
+  
+  def self.player(n=0)
+  puts "Now playing: #{@name[n]}, By: #{@author[n]} (#{n})"
+    @playbin = Gst::ElementFactory.make('playbin2')
+    @playbin.uri = @playlist[n]
+    loop = GLib::MainLoop.new(nil, false)
+      bus = @playbin.bus
+    bus.add_watch {|bus, message|
+      case message.type
+        when Gst::Message::EOS
+          loop.quit
+      end
+      true}
+      @playbin.play
+     begin
+      loop.run
+     rescue Interrupt
+     ensure
+      @playbin.stop
+     end
+    end
+  
+  def self.jamendo(mode='once')
     require 'gtk2'
     require 'open-uri'
     require 'json'
@@ -18,37 +40,17 @@ class Helpers
       @author << d['artist_name']
     end
 
-    def player(n=0)
-    puts "Now playing: #{@name[n]}, By: #{@author[n]}"
-      @playbin = Gst::ElementFactory.make('playbin2')
-      @playbin.uri = @playlist[n]
-      loop = GLib::MainLoop.new(nil, false)
-        bus = @playbin.bus
-      bus.add_watch {|bus, message|
-        case message.type
-          when Gst::Message::EOS
-            loop.quit
-        end
-        true}
-        @playbin.play
-       begin
-        loop.run
-       rescue Interrupt
-       ensure
-        @playbin.stop
-       end
+    if mode == 'loop'
+      puts 'Starting loop, use CTRL-Pause(Break) to stop.'
+      loop do
+        Helpers.player(Random.rand(0..49))
       end
-      
-    if mode == loop
-      while play == true
-        player(Rand.random(0..49))
-      end
-    elsif mode == once
-      player(Rand.random(0..49))
+    elsif mode == 'once'
+      Helpers.player(Random.rand(0..49))
+    elsif mode == 'help'
+      puts 'loop|once'
     else
-      mode.times do
-        player(Random.random(0..49))
-      end
+      Helpers.player(mode.to_s.to_i)
     end
       
   end

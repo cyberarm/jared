@@ -1,5 +1,6 @@
 class Helpers
   def self.play(request='')
+  require 'green_shoes'
   Shoes.app title: 'JaredPlayer' do
     background gray..black, angle: 90
     $v = video request#ARGV[0]
