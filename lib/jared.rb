@@ -22,7 +22,7 @@ ActiveRecord::Migration.verbose = false
  end
 
  ActiveRecord::Schema.define do
-  create_table :jared do |t|
+  create_table :infos do |t|
    t.column :status, :string
    t.column :now_playing, :string
    t.column :now_playing_author, :string

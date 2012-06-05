@@ -2,7 +2,7 @@ class Helpers
   
   def self.player(n=0)
     Lib.db
-    @jared = Jared.first
+    @jared = Info.first
     puts "Now playing: #{@name[n]}, By: #{@author[n]} (#{n})"
     @playbin = Gst::ElementFactory.make('playbin2')
     @playbin.uri = @playlist[n]
@@ -62,4 +62,5 @@ class Helpers
     end
       
   end
+  @jared.update_attributes(:now_playing => "", :now_playing_author => "")
 end
