@@ -49,8 +49,13 @@ class Jared < Thor
  end
 
  desc "jamendo MODE", "Plays music from Jamendo."
- def jamendo(mode=loop)
+ def jamendo(mode='once')
   Helpers.jamendo(mode)
+ end
+
+ desc "play FILE", "Plays File, local or remote."
+ def play(media='')
+  Helpers.play(media)
  end
  
  desc "task", "Manage your Tasks"
