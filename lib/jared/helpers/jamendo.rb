@@ -1,7 +1,9 @@
 class Helpers
   
   def self.player(n=0)
-  puts "Now playing: #{@name[n]}, By: #{@author[n]} (#{n})"
+    Lib.db
+    @jared = Jared.first
+    puts "Now playing: #{@name[n]}, By: #{@author[n]} (#{n})"
     @playbin = Gst::ElementFactory.make('playbin2')
     @playbin.uri = @playlist[n]
     loop = GLib::MainLoop.new(nil, false)
@@ -29,7 +31,7 @@ class Helpers
     @name = []
     @author = []
     @playlist = []
-    @list = open("http://api.jamendo.com/get2/name+url+stream+album_name+album_url+artist_name/track/json/track_album+album_artist/?n=50&order=ratingmonth_desc&tag_idstr=classical").read
+    @list = open("http://api.jamendo.com/get2/name+url+stream+album_name+album_url+artist_name/track/json/track_album+album_artist/?n=100&order=ratingmonth_desc&tag_idstr=classical").read
     JSON.parse(@list).each do |d|
       @playlist << d['stream']
     end
@@ -43,13 +45,19 @@ class Helpers
     if mode == 'loop'
       puts 'Starting loop, use CTRL-Pause(Break) to stop.'
       loop do
-        Helpers.player(Random.rand(0..49))
+        v = Random.rand(0..49)
+        @jared.update_attributes(:now_playing => "#{@name[v]}", :now_playing_author => "#{@author[v]}")
+        Helpers.player(v)
       end
     elsif mode == 'once'
-      Helpers.player(Random.rand(0..49))
+      v = Random.rand(0..49)
+      @jared.update_attributes(:now_playing => "#{@name[v]}", :now_playing_author => "#{@author[v]}")
+      Helpers.player(v)
     elsif mode == 'help'
       puts 'loop|once'
     else
+      v = mode.to_s.to_i
+      @jared.update_attributes(:now_playing => "#{@name[v]}", :now_playing_author => "#{@author[v]}")
       Helpers.player(mode.to_s.to_i)
     end
       

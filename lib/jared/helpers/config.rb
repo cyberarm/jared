@@ -20,23 +20,25 @@ Lib.db
    else
     para 'Your name:'
     @name = edit_line "#{@user.name}"
-	para 'Your zipcode (For weather)'
-	@zip = edit_line "#{@user.zip}"
-	para 'Your Gmail email address (For email checking)'
-	@mail = edit_line "#{@user.mail_username}"
-	para 'Your Gmail password (Will be encrypted)'
-	@password = edit_line "#{@user.mail_password}", secret: true
-	button "Save" do
-	  cipher = Gibberish::AES.new(@mail.text)
-	  @secret = cipher.enc(@password.text)
-	  update_user = @user.update_attributes(:name => @name.text, :zip => @zip.text, :mail_username => @mail.text, :mail_password => @secret)
-	  if update_user == true
-	   alert "Saved."
-	   close
-	  else
-	   alert "failed to save."
-	  end
-	 end
+	  para 'Your zipcode (For weather)'
+	  @zip = edit_line "#{@user.zip}"
+	  para 'Prefered music genre (For jamendo)'
+	  @music = list_box items: ['classical', 'rock', 'jazz', 'electro', 'hiphop'].sort
+	  para 'Your Gmail email address (For email checking)'
+	  @mail = edit_line "#{@user.mail_username}"
+	  para 'Your Gmail password (Will be encrypted)'
+	  @password = edit_line "#{@user.mail_password}", secret: true
+	  button "Save" do
+	    cipher = Gibberish::AES.new(@mail.text)
+	    @secret = cipher.enc(@password.text)
+	    update_user = @user.update_attributes(:name => @name.text, :zip => @zip.text, :music => @music.text, :mail_username => @mail.text, :mail_password => @secret)
+	    if update_user
+	     alert "Saved."
+	     close
+	    else
+	     alert "failed to save."
+	    end
+	   end
     end
    end
   end
