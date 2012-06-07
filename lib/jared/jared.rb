@@ -50,6 +50,12 @@ class Jared < Thor
 
  desc "jamendo MODE", "Plays music from Jamendo."
  def jamendo(mode='once')
+  at_exit do
+    require_relative 'lib.rb'
+    Lib.db
+    @jared = Info.first
+    @jared.update_attributes(:author_url => "", :music_url => "", :album_image => "", :album_url => "", :now_playing => "", :now_playing_author => "", :now_playing_album => "")
+  end
   Helpers.jamendo(mode)
  end
 

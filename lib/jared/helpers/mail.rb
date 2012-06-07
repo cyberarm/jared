@@ -2,6 +2,7 @@ class Helpers
 Lib.db
  # Checks Email on demand.
  def self.mail
+ require 'gibberish'
  begin
   @user = User.first
   if @user.mail_username.blank?

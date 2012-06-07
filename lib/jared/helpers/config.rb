@@ -2,6 +2,7 @@ class Helpers
 Lib.db
 # Opens a Green Shoes window to configure your name, zipcode, gmail username, gmail password.
  def self.config
+  require 'gibberish'
   Shoes.app title: "Jared - Configuration", height: 300, width: 500 do
    background "#333".."#666"
    tagline "Configure Jared to your person"

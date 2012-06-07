@@ -25,7 +25,12 @@ ActiveRecord::Migration.verbose = false
   create_table :infos do |t|
    t.column :status, :string
    t.column :now_playing, :string
+   t.column :now_playing_album, :string
+   t.column :album_image, :string
    t.column :now_playing_author, :string
+   t.column :author_url, :string
+   t.column :music_url, :string
+   t.column :album_url, :string
    t.timestamps
   end
  end
@@ -49,6 +54,7 @@ Lib.db
 if User.first.blank?
  require 'green_shoes'
  new_user = User.new(:name => "#{Etc.getlogin}", :zip => "10001", :music => 'classical')
+ new_user.save
  c=confirm "Setup Jared?"
  if c == true
   Helpers.config
@@ -57,9 +63,15 @@ if User.first.blank?
  end
 end
 
-if Jared.first.blank?
+if Info.first.blank?
  require 'green_shoes'
- jrd = Jared.new(:status => "Ready", :now_playing => "", :now_playing_author => "")
+ jrd = Info.new(:status => "Ready", :now_playing => "", :now_playing_author => "")
+ jrd.save
+ if jrd
+   puts 'Ready.'
+ else
+   puts 'Failed to create Info!'
+ end
 end
 
 require_relative "jared/jared.rb"
