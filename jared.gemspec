@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib", "bin"]
 
-  # s.add_development_dependency ""
+  s.add_development_dependency "stock_quote"
   s.add_runtime_dependency "green_shoes"
   s.add_runtime_dependency "gstreamer"
   s.add_runtime_dependency "thor"

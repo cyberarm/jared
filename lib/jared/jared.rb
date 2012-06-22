@@ -100,7 +100,6 @@ class Jared < Thor
  desc "hi", "Dynamic greeting based on the current time."
  def hi
   Helpers.greeting
-  puts 'For usage information use `jared help`'
  end
  
  desc "cal", "Calendar"
@@ -115,6 +114,11 @@ class Jared < Thor
   require 'gmail'
   require 'gibberish'
   Helpers.mail
+ end
+
+ desc "stock SYMBOL MODE", "Check semi-current stock data."
+ def stock(s,m)
+   Helpers.stock(s,m)
  end
 end
 
