@@ -3,6 +3,12 @@ require 'thor'
 class Jared < Thor
  default_task :hi
 
+ desc "hi", "Dynamic greeting based on the current time."
+ def hi
+  require_relative 'helpers/greeting.rb'
+  Helpers.greeting
+ end
+
  desc "time", "Gets the current time."
  def time
   puts "#{Time.now.strftime("%I:%M:%S%P")}"
@@ -90,6 +96,8 @@ class Jared < Thor
  
  desc "view FILENAME", "View file.png in system viewer."
  def view(filename)
+  require 'sys/uname'
+   include Sys
   if Uname.sysname.include?("Linux")
    puts "Opening #{filename}"
    system("xdg-open #{Dir.pwd}/#{filename}")
@@ -105,12 +113,6 @@ class Jared < Thor
  def date
   require_relative 'helpers/date.rb'
   Helpers.date
- end
- 
- desc "hi", "Dynamic greeting based on the current time."
- def hi
-  require_relative 'helpers/greeting.rb'
-  Helpers.greeting
  end
  
  desc "cal", "Calendar"

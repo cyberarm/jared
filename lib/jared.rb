@@ -4,8 +4,6 @@ require 'etc'
 require "fileutils"
 require 'sqlite3'
 require 'active_record'
-require 'sys/uname'
- include Sys
 
 unless File.exist?("#{Dir.home}/.jared.sqlite3")
 puts "Setting up database."
