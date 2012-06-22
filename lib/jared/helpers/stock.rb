@@ -4,7 +4,6 @@ class Helpers
   def self.stock(symbol='', mode='last')
     stock = StockQuote::Stock.quote("#{symbol}")
     puts "Stock data for: #{if stock.company.length == 0; raise "Invalid Stock. No stock data found for '#{symbol}'.";exit;else;stock.company;end}"
-    if mode == 'last';puts "Mode: #{mode}"else;end
     if mode == 'last'
       puts "#{stock.last}"
     elsif mode == 'open'
