@@ -1,6 +1,9 @@
+require 'sys/uname'
+ include Sys
+
 class Helpers
   def self.play(request='')
-    unless Uname.uname.include?('windows')
+    unless Uname.sysname.include?('Windows')
       puts 'Your platform is not supported by green_shoes Video.'
       Kernel.exit
     end
