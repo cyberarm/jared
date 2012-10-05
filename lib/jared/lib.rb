@@ -3,7 +3,7 @@
 class Lib
 # ActiveRecord DataBase connect
  def self.db
-  ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => "#{Dir.home}/.jared.sqlite3")
+   ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => "#{Dir.home}/.jared.sqlite3")
  end
 end
 

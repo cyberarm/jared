@@ -1,7 +1,6 @@
 #!/bin/ruby
 
-autoload :Etc, 'etc'
-require "fileutils"
+require 'faster_require'
 require 'sqlite3'
 require 'active_record'
 
@@ -50,7 +49,6 @@ ActiveRecord::Migration.verbose = false
 end
 
 require_relative "jared/lib.rb"
-#require "jared/lib"
 Lib.db
 if User.first.blank?
  require 'green_shoes'
@@ -58,7 +56,8 @@ if User.first.blank?
  new_user.save
  c=confirm "Setup Jared?"
  if c == true
-  Helpers.config
+   require 'jared/helpers/config'
+   Helpers.config
  else
    alert "Run: 'jared config' to setup later."
  end
