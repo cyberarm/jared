@@ -1,7 +1,5 @@
 require 'thor'
 
-puts  $LOADED_FEATURES
-
 class Jared < Thor
  default_task :hi
 

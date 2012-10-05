@@ -8,6 +8,6 @@ class Lib
 end
 
 # Model files requires
-require_relative 'models/info.rb'
+require_relative 'models/music.rb'
 require_relative 'models/task.rb'
 require_relative 'models/user.rb'
