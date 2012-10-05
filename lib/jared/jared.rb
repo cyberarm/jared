@@ -1,5 +1,7 @@
 require 'thor'
 
+puts  $LOADED_FEATURES
+
 class Jared < Thor
  default_task :hi
 
@@ -17,7 +19,8 @@ class Jared < Thor
  desc "weather [FORECAST]", "Gets weather information, If no argument then returns current weather information."
  def weather(option=nil)
   require_relative 'helpers/weather.rb'
-  require 'google_weather'
+  require 'weatherboy'
+  require 'area'
   Helpers.weather(option)
  end
  
@@ -66,7 +69,7 @@ class Jared < Thor
   at_exit do
     require_relative 'lib.rb'
     Lib.db
-    @jared = Info.first
+    @jared = Music.first
     @jared.update_attributes(:author_url => "", :music_url => "", :album_image => "", :album_url => "", :now_playing => "", :now_playing_author => "", :now_playing_album => "")
   end
   Helpers.jamendo(mode)

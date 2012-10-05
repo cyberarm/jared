@@ -19,8 +19,7 @@ elsif Time.now.strftime("%a") == "Fri"
 elsif Time.now.strftime("%a") == "Sat"
  $day = "Sun"
  $dn = "Sunday"
-end
-
+end
 class Helpers
 Lib.db 
  require_relative "../models/user.rb"
@@ -30,39 +29,34 @@ Lib.db
  # Usage: <em>jared weather (10001/today/tomorrow/forecast)</em>
  def self.weather(option=nil)
   begin
-   weather = GoogleWeather.new(@user.zip)
+   weather = Weatherboy.new(@user.zip)
 
   if option == nil
-   forecast = weather.current_conditions
-   puts weather.forecast_information.city + "."
-   puts forecast.temp_f + " Degrees Fahrenheit.", forecast.temp_c + " Degrees Celsius.", forecast.condition + ".", forecast.wind_condition + ".", forecast.humidity + "."
+   forecast = weather.current
+   puts @user.zip.to_i.to_region
+   puts forecast.temp_f + " Degrees Fahrenheit.", forecast.weather + ".", forecast.wind_mph + " mile per hour winds from the #{forecast.wind_dir}."
    
   elsif option == "today"
-   weather.forecast_conditions.each do |condition|
-    if condition.day_of_week == Time.now.strftime("%a")
-     puts Time.now.strftime("%A")
-     puts " #{condition.condition}."
-     puts " High: #{condition.high} Degrees Fahrenheit."
-     puts " Low: #{condition.low} Degrees Fahrenheit."
+   weather.forecasts.each do |condition|
+    if condition.title == 'Today'
+     puts "#{condition.title}."
+     puts " #{condition.text}"
 	end
    end
    
   elsif option == "tomorrow"
-   weather.forecast_conditions.each do |condition|
-    if condition.day_of_week == $day
-     puts $dn
-     puts " #{condition.condition}."
-     puts " High: #{condition.high} Degrees Fahrenheit."
-     puts " Low: #{condition.low} Degrees Fahrenheit."
+   weather.forecasts.each do |condition|
+    if condition.title == $dn
+     puts "#{condition.title}."
+     puts " #{condition.text}"
 	end
    end
    
   elsif option == "forecast"
-   weather.forecast_conditions.each do |condition|
-    puts "#{condition.day_of_week}."
-    puts " #{condition.condition}."
-    puts " High: #{condition.high} Degrees Fahrenheit."
-    puts " Low: #{condition.low} Degrees Fahrenheit."
+   weather.forecasts.each do |condition|
+    puts "#{condition.title}."
+    puts " #{condition.text}"
+    puts
    end
   else
    puts "Unable to fetch weather due to argument error."

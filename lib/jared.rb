@@ -1,6 +1,6 @@
 #!/bin/ruby
-require "faster_require"
-require 'etc'
+
+autoload :Etc, 'etc'
 require "fileutils"
 require 'sqlite3'
 require 'active_record'
@@ -10,6 +10,7 @@ puts "Setting up database."
 ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => "#{Dir.home}/.jared.sqlite3")
 ActiveRecord::Migration.verbose = false
 
+ # Create Database table for Tasks
  ActiveRecord::Schema.define do
   create_table :tasks do |t|
    t.column :title, :string
@@ -19,8 +20,9 @@ ActiveRecord::Migration.verbose = false
   end
  end
 
+ # Create table table for Ifos
  ActiveRecord::Schema.define do
-  create_table :infos do |t|
+  create_table :musics do |t|
    t.column :status, :string
    t.column :now_playing, :string
    t.column :now_playing_album, :string
@@ -33,6 +35,7 @@ ActiveRecord::Migration.verbose = false
   end
  end
 
+ # Create Database table for User
  ActiveRecord::Schema.define do
   create_table :users do |t|
    t.column :name, :string
@@ -61,14 +64,14 @@ if User.first.blank?
  end
 end
 
-if Info.first.blank?
+if Music.first.blank?
  require 'green_shoes'
- jrd = Info.new(:status => "Ready", :now_playing => "", :now_playing_author => "")
+ jrd = Music.new(:status => "Ready", :now_playing => "", :now_playing_author => "")
  jrd.save
  if jrd
    puts 'Ready.'
  else
-   puts 'Failed to create Info!'
+   puts 'Failed to create Music!'
  end
 end
 

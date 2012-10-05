@@ -23,7 +23,7 @@ class Helpers
   
   def self.jamendo(mode='once')
     Lib.db
-    @jared = Info.first
+    @jared = Music.first
     @user  = User.first
     require 'gtk2'
     require 'open-uri'

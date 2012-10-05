@@ -23,7 +23,7 @@ class Helpers
    puts nd.gsub("0", "")
   elsif Time.now.strftime("%d") == "22"
    puts nd
-  elsif  Time.now.strftime("%d") == "3"
+  elsif  Time.now.strftime("%d") == "03"
    puts rd
   elsif Time.now.strftime("%d") == "33"
    puts rd
