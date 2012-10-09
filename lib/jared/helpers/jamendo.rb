@@ -29,14 +29,14 @@ class Helpers
     require 'open-uri'
     require 'json'
     require 'gst'
-    @list = open("http://api.jamendo.com/get2/name+url+stream+album_name+album_url+album_image+artist_name+artist_url/track/json/track_album+album_artist/?n=100&order=ratingmonth_desc&tag_idstr=#{@user.music}").read
+    @list = open("http://api.jamendo.com/get2/name+url+stream+album_name+album_url+album_image+artist_name+artist_url/track/json/track_album+album_artist/?n=25&order=ratingmonth_desc&tag_idstr=#{@user.music}").read
     @d = JSON.parse(@list)
     @data = @d[2]
 
     if mode == 'loop'
       puts 'Starting loop, use CTRL-Pause(Break) to stop.'
       loop do
-        v = Random.rand(0..49)
+        v = Random.rand(0..24)
         @data = @d[v]
         @jared.update_attributes(:author_url => "#{@data['artist_url']}", :album_image => "#{@data['album_image']}", :music_url => "#{@data['url']}", :album_url => "#{@data['album_url']}", :now_playing => "#{@data['name']}", :now_playing_author => "#{@data['artist_name']}", :now_playing_album => "#{@data['album_name']}")
         Helpers.player(v)
