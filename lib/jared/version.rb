@@ -1,3 +1,3 @@
 module Jared
-  VERSION = "0.0.7a3"
+  VERSION = "0.0.7a4"
 end

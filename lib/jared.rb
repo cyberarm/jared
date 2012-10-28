@@ -1,9 +1,8 @@
 #!/bin/ruby
-
+s=Time.now
 require 'faster_require'
 require 'sqlite3'
 require 'active_record'
-
 unless File.exist?("#{Dir.home}/.jared.sqlite3")
 puts "Setting up database."
 ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => "#{Dir.home}/.jared.sqlite3")
@@ -54,7 +53,7 @@ if User.first.blank?
  require 'green_shoes'
  new_user = User.new(:name => "#{Etc.getlogin}", :zip => "10001", :music => 'classical')
  new_user.save
- c=confirm "Setup Jared?"
+ c=confirm "Setup Jared?\nSetting up Jared will enable it to retrieve personalized data for you."
  if c == true
    require 'jared/helpers/config'
    Helpers.config
@@ -64,7 +63,6 @@ if User.first.blank?
 end
 
 if Music.first.blank?
- require 'green_shoes'
  jrd = Music.new(:status => "Ready", :now_playing => "", :now_playing_author => "")
  jrd.save
  if jrd
@@ -73,5 +71,9 @@ if Music.first.blank?
    puts 'Failed to create Music!'
  end
 end
+
+f=Time.now
+@load_time = f-s
+puts "Main dependencies took #{@load_time} seconds to load."
 
 require_relative "jared/jared.rb"

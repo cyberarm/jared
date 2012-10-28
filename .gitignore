@@ -6,3 +6,5 @@ pkg/*
 *.*~
 doc/*
 .project
+._redcar
+lib/jared/drb/
