@@ -1,8 +1,16 @@
 # Jared - Ruby Powered Digital Assistant (RDA)
 ## What is Jared?
+Jared is a ruby program that in the hopefully near future will be useful for:
+* Creating and managing your tasks
+* Checking your email
+* Playing your preferred music
+* Creating skeleton project files
+* Understand spoken commands (in the distant future)
+* Other miscellaneous actions
+
 Jared's goal is to be a reality of Jarvis from the film, Ironman.
 
-However, thats a **long** ways down the road, starting Jared small and working slowly up to the end goal of a voice-activated house control A.I.
+However, thats a _long_ ways down the road.
 ## Install Jared
 You can get the lasest stable release on RubyGems via *gem install jared*
 
