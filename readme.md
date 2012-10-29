@@ -21,13 +21,6 @@ You can get the lasest stable release on RubyGems via *gem install jared*
   
   Usage: jared clock
 
-### Cal
-  <span style="color:red;">Not yet implemented.</span>
-  
-  Manage your appointments.
-
-  Usage: jared cal
-  
 ### Day
   Puts current day.
   
@@ -75,21 +68,16 @@ You can get the lasest stable release on RubyGems via *gem install jared*
 
   Usage: jared weather (today/tomorrow/forecast)
 
-### Whatis
-  <span style="color:red;">Not yet implemented.</span>
-  
-  Google's the definition of the word.
-  
-  Usage: jared whatis glass
-  
+
 ### Whereis
   Opens Gmaps in default browser.
 
-  Usage: jared whereis
-
-  Search Gmaps for > Walmart
+  Usage: jared whereis "Mt. st helens"
  
 ### View
   Opens the file in the system viewer.
   
   Usage: jared view jared.rb
+
+## Contribute
+  [Wiki](http://github.com/cyberarm/jared/wiki/Contribute)
