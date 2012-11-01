@@ -17,7 +17,7 @@ ActiveRecord::Migration.verbose = false
   end
  end
 
- # Create table table for Ifos
+ # Create table table for Musics
  ActiveRecord::Schema.define do
   create_table :musics do |t|
    t.column :status, :string

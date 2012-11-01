@@ -27,7 +27,7 @@ class Jared < Thor
 
     desc "hi", "Dynamic greeting based on the current time."
     def hi
-      require_relative 'tasks/greeting.rb'
+      require_relative 'core/greeting.rb'
       Action::Greet.new.greet
     end
 
@@ -38,7 +38,7 @@ class Jared < Thor
 
     desc "weather [FORECAST]", "Gets weather information, If no argument then returns current weather information."
     def weather(option=nil)
-      require_relative 'tasks/weather.rb'
+      require_relative 'core/weather.rb'
       require 'weatherboy'
       require 'area'
       Action::Weather.new.weather(option)
@@ -46,20 +46,20 @@ class Jared < Thor
 
     desc "clock", "Open a Green Shoes powered clock."
     def clock
-      require_relative 'tasks/clock.rb'
+      require_relative 'core/clock.rb'
       require 'green_shoes'
       Action::Clock.new.clock
     end
 
     desc "create TYPE NAME", "create"
     def create(type,name)
-      require_relative 'tasks/create.rb'
+      require_relative 'core/create.rb'
       Action::Create.new.create
     end
 
     desc "whereis PLACE", "Finds PLACE via Google Maps"
     def whereis(place)
-      require_relative 'tasks/map.rb'
+      require_relative 'core/map.rb'
       require 'launchy'
       Action::Map.new.map(place)
     end
@@ -71,13 +71,13 @@ class Jared < Thor
 
     desc "whatis WORD", "Looks up the meaning of WORD."
     def whatis(word)
-      require_relative 'tasks/define.rb'
+      require_relative 'core/define.rb'
       Action::Word.new.define(word)
     end
 
     desc "deamon MAIL/TASK/CAL", "Checks every minute for new mail/taskss/appointments."
     def deamon(function=nil)
-      require_relative 'tasks/deamon.rb'
+      require_relative 'core/deamon.rb'
       require 'gmail'
       require 'gibberish'
       Action::Daemon.new.deamon
@@ -85,13 +85,13 @@ class Jared < Thor
 
     desc "jamendo MODE", "Plays music from Jamendo."
     def jamendo(mode='play')
-      require_relative 'tasks/jamendo.rb'
+      require_relative 'core/jamendo.rb'
       Action::Jamendo.new.jamendo(mode)
     end
 
     desc "play FILE", "Plays File, local or remote."
     def play(media='')
-      require_relative 'tasks/player.rb'
+      require_relative 'core/player.rb'
       Action::Player.new.play(media)
     end
 
@@ -111,7 +111,7 @@ class Jared < Thor
 
     desc "config", "Configure Jared."
     def config
-      require_relative 'tasks/config.rb'
+      require_relative 'core/config.rb'
       require 'green_shoes'
       require 'gibberish'
       Action::Configure.new.config
@@ -132,7 +132,7 @@ class Jared < Thor
 
     desc "date", "Gets the current date."
     def date
-      require_relative 'tasks/date.rb'
+      require_relative 'core/date.rb'
       Action::Date.new.date
     end
 
@@ -145,7 +145,7 @@ class Jared < Thor
 
     desc "mail", "Checks your mailbox for new mails."
     def mail
-      require_relative 'tasks/mail.rb'
+      require_relative 'core/mail.rb'
       require 'gmail'
       require 'gibberish'
       Action::Mail.new.mail
@@ -153,7 +153,7 @@ class Jared < Thor
 
     desc "stock SYMBOL MODE", "Check semi-current stock data."
     def stock(s,m='last')
-      require_relative 'tasks/stock.rb'
+      require_relative 'core/stock.rb'
       Action::Stock.new.stock(s,m)
     end
   end

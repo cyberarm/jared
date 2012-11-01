@@ -2,16 +2,16 @@
 s=Time.now
 require 'faster_require'
 require 'logger'
-require_relative "jared/lib.rb"
 
 if File.exists?("#{Dir.home}/.jared") && File.directory?("#{Dir.home}/.jared")
 else
   FileUtils.mkdir("#{Dir.home}/.jared")
 end
 
-log=Logger.new("#{Dir.home}/.jared/#{Time.new.strftime('%I-%M-%S')}-debug.log")
-log.info "Loaded logger."
+@log=Logger.new("#{Dir.home}/.jared/#{Time.new.strftime('%I-%M-%S')}-debug.log")
+@log.info "Loaded logger."
 
+require_relative "jared/database.rb"
 Lib.db
 if User.first.blank?
   require 'green_shoes'
@@ -19,8 +19,8 @@ if User.first.blank?
   new_user.save
   c=confirm "Setup Jared?\nSetting up Jared will enable it to retrieve personalized data for you."
   if c == true
-    require 'jared/helpers/config'
-    Helpers.config
+    require 'jared/core/config'
+    Action::Configure.new.config
   else
     alert "Run: 'jared config' to setup later."
   end
@@ -38,6 +38,6 @@ end
 
 f=Time.now
 @load_time = f-s
-log.info "Main dependencies took #{@load_time} seconds to load."
+@log.info "Main dependencies took #{@load_time} seconds to load."
 
-require_relative "jared/jared.rb"
+require_relative "jared/jared"
