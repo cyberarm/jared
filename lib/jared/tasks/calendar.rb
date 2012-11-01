@@ -1,4 +1,4 @@
-class Task
+class Action
 # Not yet implemented.
 #
 # _jared_ _cal_ Manage your appointments in a Green Shoes app.

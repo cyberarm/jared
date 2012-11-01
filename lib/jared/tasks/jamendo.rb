@@ -1,6 +1,6 @@
-class Task
+class Action
   class Jamendo
-    attr_accessor :playloop
+    attr_accessor :playloop, :playbin
     def length(l)
       @m="#{l.to_i.divmod(60)[0]} minutes"
       if defined?(l.to_i.divmod(60)[1])

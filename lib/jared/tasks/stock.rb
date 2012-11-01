@@ -1,6 +1,6 @@
 require 'stock_quote'
 
-class Task
+class Action
   class Stock
     def stock(symbol='', mode='last')
       stock = StockQuote::Stock.quote("#{symbol}")

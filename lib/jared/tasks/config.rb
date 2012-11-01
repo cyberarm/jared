@@ -1,4 +1,4 @@
-class Task
+class Action
   class Configure
     Lib.db
     # Opens a Green Shoes window to configure your name, zipcode, gmail username, gmail password.

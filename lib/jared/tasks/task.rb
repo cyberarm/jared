@@ -1,7 +1,7 @@
 def time_parse(time)
   Time.parse(time.to_s).strftime("%A, %B %dth %Y")
 end
-class Task
+class Action
   class Tasks
  # Opens a Green Shoes app to manage tasks.
   def task

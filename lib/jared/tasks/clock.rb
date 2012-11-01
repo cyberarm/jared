@@ -1,4 +1,4 @@
-class Task
+class Action
 # _jared_ _clock_ Opens a digital clock in a Green Shoes app.
   class Clock
     def clock

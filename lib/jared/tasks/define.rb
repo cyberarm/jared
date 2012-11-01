@@ -1,4 +1,4 @@
-class Task
+class Action
   class Word
     #TODO: Get this functional.
     #

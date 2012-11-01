@@ -1,8 +1,8 @@
-class Helpers
+class Action
   class Mail
     Lib.db
     # Checks Email on demand.
-    def self.mail
+    def mail
       require 'gibberish'
       begin
         @user = User.first

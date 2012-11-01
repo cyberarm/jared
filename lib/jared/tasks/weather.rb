@@ -21,18 +21,16 @@ elsif Time.now.strftime("%a") == "Sat"
   $dn = "Sunday"
 end
 
-class Task
+class Action
   class Weather
     Lib.db
-    require_relative "../models/user.rb"
-    @user = User.first
     # Checks weather.
     #
     # Usage: <em>jared weather (10001/today/tomorrow/forecast)</em>
     def weather(option=nil)
+      @user = User.first
       begin
         weather = Weatherboy.new(@user.zip)
-
         if option == nil
           forecast = weather.current
           puts @user.zip.to_i.to_region

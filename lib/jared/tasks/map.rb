@@ -1,4 +1,4 @@
-class Task
+class Action
   class Map
     # <em>jared map Texas, USA</em> will open GMaps to Texas, USA.
     def map(place)

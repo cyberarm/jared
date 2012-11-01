@@ -1,4 +1,4 @@
-class Task
+class Action
  # Not yet implemented.
  #
  # Calculates.

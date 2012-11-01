@@ -1,7 +1,7 @@
 require 'sys/uname'
  include Sys
 
-class Task
+class Action
   class Player
     def play(request='')
       unless Uname.sysname.include?('Windows')

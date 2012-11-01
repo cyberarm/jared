@@ -1,4 +1,4 @@
-class Task
+class Action
   class Greet
     Lib.db
     # Dynamically greets the user by time when <em>jared hi/hello</em> is run.
