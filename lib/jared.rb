@@ -8,6 +8,21 @@ else
   FileUtils.mkdir("#{Dir.home}/.jared")
 end
 
+if File.exists?("#{Dir.home}/.jared/logs") && File.directory?("#{Dir.home}/.jared/logs")
+else
+  FileUtils.mkdir("#{Dir.home}/.jared/logs")
+end
+
+if File.exists?("#{Dir.home}/.jared/db") && File.directory?("#{Dir.home}/.jared/db")
+else
+  FileUtils.mkdir("#{Dir.home}/.jared/db")
+end
+
+if File.exists?("#{Dir.home}/.jared/plugins") && File.directory?("#{Dir.home}/.jared/plugins")
+else
+  FileUtils.mkdir("#{Dir.home}/.jared/plugins")
+end
+
 @log=Logger.new("#{Dir.home}/.jared/#{Time.new.strftime('%I-%M-%S')}-debug.log")
 @log.info "Loaded logger."
 
