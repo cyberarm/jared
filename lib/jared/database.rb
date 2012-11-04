@@ -2,9 +2,9 @@
 
 require 'sqlite3'
 require 'active_record'
-unless File.exist?("#{Dir.home}/.jared.sqlite3")
+unless File.exist?("#{Dir.home}/.jared/db/jared.sqlite3")
 puts "Setting up database."
-ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => "#{Dir.home}/.jared.sqlite3")
+ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => "#{Dir.home}/.jared/db/jared.sqlite3")
 ActiveRecord::Migration.verbose = false
 
  # Create Database table for Tasks
@@ -49,7 +49,7 @@ end
 class Lib
 # ActiveRecord DataBase connect
  def self.db
-   ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => "#{Dir.home}/.jared.sqlite3")
+   ActiveRecord::Base.establish_connection(:adapter => 'sqlite3', :database => "#{Dir.home}/.jared/db/jared.sqlite3")
  end
 end
 

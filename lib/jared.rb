@@ -1,7 +1,9 @@
 #!/bin/ruby
 s=Time.now
-require 'faster_require'
 require 'logger'
+require 'fileutils'
+require 'faster_require'
+require_relative 'jared/version'
 
 if File.exists?("#{Dir.home}/.jared") && File.directory?("#{Dir.home}/.jared")
 else
@@ -23,21 +25,34 @@ else
   FileUtils.mkdir("#{Dir.home}/.jared/plugins")
 end
 
-@log=Logger.new("#{Dir.home}/.jared/#{Time.new.strftime('%I-%M-%S')}-debug.log")
-@log.info "Loaded logger."
+require_relative "jared/logg"
+include Logg
 
-require_relative "jared/database.rb"
+log.info "Loaded logger."
+log.info "Using Jared version: #{VERSION}"
+
+require_relative "jared/database"
+log.info "Loading Database..."
 Lib.db
+log.info "Loaded Database."
+
+require_relative "jared/plugins"
+log.info "Loading plugins..."
+@plugins=Plugins::Load.new.all
+log.info "Loaded plugins."
 if User.first.blank?
   require 'green_shoes'
   new_user = User.new(:name => "#{Etc.getlogin}", :zip => "10001", :music => 'classical')
+  log.info "Creating new user: #{new_user.inspect}"
   new_user.save
-  c=confirm "Setup Jared?\nSetting up Jared will enable it to retrieve personalized data for you."
+  log.info "Created new user: #{new_user.inspect}"
+  c=confirm "Setup Jared?\nSetting up Jared will enable it\n to retrieve personalized data for you."
   if c == true
     require 'jared/core/config'
     Action::Configure.new.config
   else
     alert "Run: 'jared config' to setup later."
+    log.info "Skipped initial setup."
   end
 end
 
@@ -53,6 +68,6 @@ end
 
 f=Time.now
 @load_time = f-s
-@log.info "Main dependencies took #{@load_time} seconds to load."
+log.info "Main dependencies took #{@load_time} seconds to load."
 
 require_relative "jared/jared"
