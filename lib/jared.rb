@@ -40,6 +40,7 @@ require_relative "jared/plugins"
 log.info "Loading plugins..."
 @plugins=Plugins::Load.new.all
 log.info "Loaded plugins."
+
 if User.first.blank?
   require 'green_shoes'
   new_user = User.new(:name => "#{Etc.getlogin}", :zip => "10001", :music => 'classical')
@@ -60,9 +61,8 @@ if Music.first.blank?
   jrd = Music.new(:status => "Ready", :now_playing => "", :now_playing_author => "")
   jrd.save
   if jrd
-    puts 'Ready.'
   else
-    puts 'Failed to create Music!'
+    log.error 'Failed to create Music!'
   end
 end
 
