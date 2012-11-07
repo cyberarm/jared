@@ -16,7 +16,7 @@ log.info "Plugin count: #{@plugins.count}"
   end
 end
 
-if ARGV[0] && ARGV[0].length <= 1
+if ARGV[0] && ARGV[0].length >= 1
   require_relative "core/greeting/lib/greeting"
   Action::Greet.greet
 else

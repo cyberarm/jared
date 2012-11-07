@@ -1,3 +1,6 @@
+require "green_shoes"
+require "chronic"
+
 def time_parse(time)
   Time.parse(time.to_s).strftime("%A, %B %dth %Y")
 end
