@@ -1,3 +1,6 @@
+require 'gmail'
+require 'gibberish'
+
 class Action
   class Mail
     Lib.db
@@ -38,3 +41,5 @@ class Action
     end
   end
 end
+
+Action::Mail.new.mail

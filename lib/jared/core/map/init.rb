@@ -9,7 +9,7 @@ plugin=Jared::Plugin.new
   plugin.command = "map"
   plugin.usage = "map 'location, io'"
   plugin.version = "0.4.0"
-  plugin.main_require = "lib/clock"
+  plugin.main_require = "lib/map"
   plugin.jared_version = "0.0.7a4"
   plugin.platform = :ruby
 

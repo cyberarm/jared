@@ -9,7 +9,7 @@ plugin=Jared::Plugin.new
   plugin.command = "greet"
   plugin.usage = "clock"
   plugin.version = "0.4.0"
-  plugin.main_require = "lib/clock"
+  plugin.main_require = "lib/greeting"
   plugin.jared_version = "0.0.7a4"
   plugin.platform = :ruby
 

@@ -19,7 +19,8 @@ class Plugins
 
     def core
       count=0
-      Dir.glob("#{Dir.pwd}/jared/core/*").select do |file|
+      spec=Gem::Specification.find_by_name("jared")
+      Dir.glob("#{spec.gem_dir}/lib/jared/core/*").select do |file|
         if File.directory?(file)
         else
           next

@@ -9,8 +9,8 @@ plugin=Jared::Plugin.new
   plugin.command = "play"
   plugin.usage = "play 'file or url'"
   plugin.version = "0.4.0"
-  plugin.main_require = "lib/clock"
+  plugin.main_require = "lib/player"
   plugin.jared_version = "0.0.7a4"
-  plugin.platform = :mingw32, :win32
+  plugin.platform = :mingw32
 
 @@plugin = plugin
