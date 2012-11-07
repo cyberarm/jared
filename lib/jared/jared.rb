@@ -16,9 +16,12 @@ log.info "Plugin count: #{@plugins.count}"
   end
 end
 
-if ARGV[0] && ARGV[0].length >= 1
-  require_relative "core/greeting/lib/greeting"
-  Action::Greet.greet
-else
-  puts "Plugin for '#{ARGV[0]}' not found." unless @found
+unless @found
+  unless defined?(ARGV[0].length)
+    require_relative "core/greeter/lib/greeting"
+  end
+end
+
+unless @found
+  puts "Plugin for '#{ARGV[0]}' not found." if defined?(ARGV[0].length)
 end
