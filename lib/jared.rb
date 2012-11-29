@@ -1,8 +1,9 @@
 #!/bin/ruby
 s=Time.now
+require "json"
 require 'logger'
 require 'fileutils'
-require 'faster_require'
+require "open-uri"
 require_relative 'jared/version'
 
 if File.exists?("#{Dir.home}/.jared") && File.directory?("#{Dir.home}/.jared")
@@ -30,6 +31,11 @@ include Logg
 
 log.info "Loaded logger."
 log.info "Using Jared version: #{VERSION}"
+Thread.new do
+  info=open("https://rubygems.org/api/v1/gems/jared.json").read
+  json=JSON.parse(info)
+  log.info json['version']
+end
 
 require_relative "jared/database"
 log.info "Loading Database..."
