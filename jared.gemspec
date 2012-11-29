@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "stock_quote"
   s.add_runtime_dependency "green_shoes"
   s.add_runtime_dependency "gstreamer"
-  s.add_runtime_dependency "thor"
+  s.add_runtime_dependency "versionomy"
   s.add_runtime_dependency "chronic"
   s.add_runtime_dependency "sys-uname"
   s.add_runtime_dependency "activerecord"

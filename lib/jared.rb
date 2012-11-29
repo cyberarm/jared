@@ -2,8 +2,9 @@
 s=Time.now
 require "json"
 require 'logger'
-require 'fileutils'
 require "open-uri"
+require 'fileutils'
+require 'versionomy'
 require_relative 'jared/version'
 
 if File.exists?("#{Dir.home}/.jared") && File.directory?("#{Dir.home}/.jared")
@@ -34,13 +35,9 @@ log.info "Using Jared version: #{VERSION}"
 Thread.new do
   info=open("http://rubygems.org/api/v1/gems/jared.json").read
   json=JSON.parse(info)
-  current_version = VERSION.split('.')
-  i_c = "#{current_version[0]}.#{current_version[1]}"
-  current_version = i_c.to_i
+  current_version = Versionomy.parse(VERSION)
 
-  web_version = json['version'].split('.')
-  i_w = "#{web_version[0]}.#{web_version[1]}"
-  web_version = i_w.to_i
+  web_version = Versionomy.parse(json['version'])
   if current_version < web_version
     log.info "A new version of Jared is available on RubyGems."
     puts "A new version of Jared is available on RubyGems."
