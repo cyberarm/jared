@@ -43,7 +43,9 @@ class Plugins
           next
         end
         count+=1
-        data={name: plugin.name,
+        data={
+          dir: file,
+          name: plugin.name,
           description: plugin.description,
           author: plugin.author,
           author_email: plugin.author_email,
@@ -56,6 +58,12 @@ class Plugins
           jared_version: plugin.jared_version
         }
         if plugin.jared_version == VERSION && plugin.platform == :ruby
+          a=PLUGINS.add?(data)
+          if a
+            log.info "Loaded: #{plugin.name}"
+            log.info "Plugin count: #{count}"
+          end
+        elsif RUBY_PLATFORM.include?(plugin.platform.to_s)
           a=PLUGINS.add?(data)
           if a
             log.info "Loaded: #{plugin.name}"
@@ -90,7 +98,9 @@ class Plugins
           next
         end
         count+=1
-        data={name: plugin.name,
+        data={
+          dir: file,
+          name: plugin.name,
           description: plugin.description,
           author: plugin.author,
           author_email: plugin.author_email,
@@ -106,7 +116,11 @@ class Plugins
           a=PLUGINS.add?(data)
           if a
             log.info "Loaded: #{plugin.name}"
-            log.info "Plugin count: #{count}"
+          end
+        elsif RUBY_PLATFORM.include?(plugin.platform.to_s)
+          a=PLUGINS.add?(data)
+          if a
+            log.info "Loaded: #{plugin.name}"
           end
         else
           log.warn "Could not load plugin: #{file.gsub("#{PATH}", '')}"

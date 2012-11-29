@@ -6,12 +6,7 @@ log.info "Plugin count: #{@plugins.count}"
   next unless defined?(ARGV[0].length)
   next unless plugin[:command].downcase == ARGV[0].downcase
   if plugin[:command].downcase == ARGV[0].downcase
-    begin
-      require_relative "#{@path}/#{plugin[:name]}/#{plugin[:main_require]}"
-    rescue LoadError
-      spec=Gem::Specification.find_by_name("jared")
-      require_relative "#{spec.gem_dir}/lib/jared/core/#{plugin[:name].downcase}/#{plugin[:main_require]}"
-    end
+    require_relative "#{plugin[:dir]}/#{plugin[:main_require]}"
     @found=true
   end
 end

@@ -5,6 +5,11 @@ module Logg
 
   # Global, memoized, lazy initialized instance of a logger
   def self.logger
-    @logger ||= Logger.new("#{Dir.home}/.jared/logs/#{Time.new.strftime('%I-%M-%S')}-debug.log")
+    if File.exists?("#{Dir.home}/.jared/logs/#{Time.new.strftime('%m-%d-%y-%H')}-debug.log")
+      @file = File.open("#{Dir.home}/.jared/logs/#{Time.new.strftime('%m-%d-%y-%H')}-debug.log", 'a')
+      @logger ||= Logger.new(@file)
+    else
+      @logger ||= Logger.new("#{Dir.home}/.jared/logs/#{Time.new.strftime('%m-%d-%y-%H')}-debug.log")
+    end
   end
 end

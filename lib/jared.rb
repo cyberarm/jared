@@ -32,9 +32,19 @@ include Logg
 log.info "Loaded logger."
 log.info "Using Jared version: #{VERSION}"
 Thread.new do
-  info=open("https://rubygems.org/api/v1/gems/jared.json").read
+  info=open("http://rubygems.org/api/v1/gems/jared.json").read
   json=JSON.parse(info)
-  log.info json['version']
+  current_version = VERSION.split('.')
+  i_c = "#{current_version[0]}.#{current_version[1]}"
+  current_version = i_c.to_i
+
+  web_version = json['version'].split('.')
+  i_w = "#{web_version[0]}.#{web_version[1]}"
+  web_version = i_w.to_i
+  if current_version < web_version
+    log.info "A new version of Jared is available on RubyGems."
+    puts "A new version of Jared is available on RubyGems."
+  end
 end
 
 require_relative "jared/database"
