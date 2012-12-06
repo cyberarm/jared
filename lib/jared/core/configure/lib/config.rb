@@ -6,16 +6,24 @@ class Action
     # Opens a Green Shoes window to configure your name, zipcode, gmail username, gmail password.
     def config
     require 'gibberish'
+    require "json"
+    require "open-uri"
+
     Shoes.app title: "Jared - Configuration", height: 300, width: 500 do
-     background "#333".."#666"
-     tagline "Configure Jared to your person"
-     @user = User.first
-     if @user.blank?
+      @radios = open("http://api.jamendo.com/get2/id+name/radio/json/?n=all").read
+      @music_array = []
+      JSON.parse(@radios).each do |radio|
+        @music_array << radio['name']
+      end
+      background "#333".."#666"
+      tagline "Configure Jared to your person"
+      @user = User.first
+      if @user.blank?
         button "Create profile" do
           new_user = User.new(:name => "#{Etc.getlogin}", :zip => "10001")
           new_user.save
         if new_user == true
-          exit
+          close
           Helpers.config
         else
           alert "Failed. Retry."
@@ -27,11 +35,11 @@ class Action
       para 'Your zipcode (For weather)'
       @zip = edit_line "#{@user.zip}"
       para 'Prefered music genre (For jamendo)'
-      @music = list_box items: ['classical', 'rock', 'jazz', 'electro', 'hiphop'].sort
+      @music = list_box items: @music_array.sort
       para 'Your Gmail email address (For email checking)'
       @mail = edit_line "#{@user.mail_username}"
       para 'Your Gmail password (Will be encrypted)'
-      @password = edit_line "#{@user.mail_password}", secret: true
+      @password = edit_line "", secret: true
       button "Save" do
         cipher = Gibberish::AES.new(@mail.text)
         @secret = cipher.enc(@password.text)

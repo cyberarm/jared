@@ -54,7 +54,19 @@ class Action
       require 'open-uri'
       require 'json'
       require 'gst'
-      @list = open("http://api.jamendo.com/get2/name+url+stream+album_name+album_url+album_image+artist_name+artist_url+duration/track/json/track_album+album_artist/?n=100&streamencoding=ogg2&order=rating_desc&tag_idstr=#{@user.music}").read
+      @user.music
+
+      @radios = open("http://api.jamendo.com/get2/id+name/radio/json/?n=all").read
+      @radio_id = 0
+      @radio_data=JSON.parse(@radios)
+      @radio_data.select do |radio|
+        next unless radio['name'] == @user.music
+        @radio_id = radio['id']
+      end
+
+      sleep 1
+
+      @list = open("http://api.jamendo.com/get2/name+url+stream+album_name+album_url+album_image+artist_name+artist_url+duration/track/json/track_album+album_artist/?radioid=#{@radio_id}n=100&streamencoding=ogg2").read
       @d = JSON.parse(@list)
       if mode == 'play'
         puts 'Starting loop, use CTRL-Pause(Break) to stop.'
@@ -71,5 +83,5 @@ class Action
   end
 end
 
-a=Action::Jamendo.new.jamendo#(ARGV[1])
+a=Action::Jamendo.new.jamendo
 p a
