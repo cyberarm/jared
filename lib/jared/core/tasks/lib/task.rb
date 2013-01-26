@@ -1,119 +1,127 @@
 require "green_shoes"
 require "chronic"
+require_relative "../../../database"
 
-def time_parse(time)
-  Time.parse(time.to_s).strftime("%A, %B %dth %Y")
+module JCPFT
+  module Extensions
+    def draw_tasks_list
+      Task.all.each do |task|
+        caption "Task: #{task.title}"
+        para "Due: #{Time.parse(task.parsed_due.to_s).strftime("%A, %B %d %Y")}"
+        para "#{task.description}"
+        inscription
+        flow do
+          button "Edit" do
+            create_or_edit_task(task.id,$content_div)
+          end
+
+          button "Delete" do
+            check = confirm "Are you sure?"
+            if check
+              Task.destroy(task.id)
+              $redraw_ui = true
+              self.state = 'disabled'
+            end
+          end
+        end
+        inscription
+      end
+    end
+
+    def create_or_edit_task(task,content_div)
+      if task == :false
+        method = 'Create'
+      else
+        method = 'Edit'
+        task = Task.find(task)
+      end
+
+      window title: "#{method} Task" do
+        stack margin_left: 20 do
+          para "Title:"
+          if method == 'Edit'
+            @title = edit_line "#{task.title}"
+          else
+            @title = edit_line ""
+          end
+
+          para "Due"
+          if method == 'Edit'
+            @due = edit_line "#{task.due}"
+          else
+            @due = edit_line ""
+          end
+
+          para "Description"
+          if method == 'Edit'
+            @description = edit_box "#{task.description}"
+          else
+            @description = edit_box ""
+          end
+
+          button "Save" do
+            if method == 'Create'
+              task = Task.new(:title => @title.text, :description => @description.text, :due => @due.text, :parsed_due => Chronic.parse(@due.text))
+              begin
+                if task.save!
+                  $redraw_ui = true
+                  close
+                else
+                  alert "Task failed to save, try again."
+                end
+              rescue => e
+                alert "Error: #{e}"
+              end
+            else
+              if task.update_attributes(:title => @title.text, :description => @description.text, :due => @due.text, :parsed_due => Chronic.parse(@due.text))
+                $redraw_ui = true
+                close
+              end
+            end
+          end
+        end
+      end
+    end
+  end
 end
+
 class Action
   class Tasks
- # Opens a Green Shoes app to manage tasks.
-  def task
-  Lib.db
-  Shoes.app title: "Jared Tasks" do
-    title "Tasks"
-      button "add task" do
-        Shoes.app  title: "Add Task", width: 250, height: 400 do
-          title "add task"
-          stack do
-            para "Task title:"
-            @title = edit_line text: ""
-            para "Task desciption:"
-            @desciption = edit_box text: ""
-            para "Task due date:"
-            @due = edit_line text: ""
-            button "Add Task" do
-              new_task = Task.new(:title => @title.text, :desciption => @desciption.text, :due => Chronic.parse(@due.text))
-              new_task.save!
-              if new_task
-                alert "added task"
-                close
-              else
-              alert "failed to add task. Make sure you use a unique title."
+    def time_parse(time)
+      Time.parse(time.to_s).strftime("%A, %B %dth %Y")
+    end
+
+    # Opens a Green Shoes app to manage tasks.
+    def task
+      Lib.db
+      Shoes.app title: "Jared Tasks" do
+        extend JCPFT::Extensions
+
+        Thread.new do
+          loop do
+            if $redraw_ui
+              $content_div.clear do
+                draw_tasks_list
               end
+              $redraw_ui = false
             end
+            sleep(0.5)
           end
         end
-      end
 
-      button "Refresh" do
-        $tasks_s.clear do
-          $tasks_s = stack do
-            task = Task.find(:all)
-            task.each do |t|
-              tagline t.title
-              para "Due: #{time_parse(t.due)}"
-              flow do
-                button "Edit", state: "nil" do
-                Shoes.app  title: "Editing Task: #{t.title}", width: 250, height: 400 do
-                title "edit task"
-                stack do
-                  para "Task title:"
-                  @title = edit_line text: "#{t.title}"
-                  para "Task desciption:"
-                  @desciption = edit_box text: "#{t.desciption}"
-                  para "Task due date:"
-                  @due = edit_line text: "#{time_parse(t.due)}"
-                  button "update Task" do
-                    task = Task.find(t.id)
-                    @edit_task = task.update_attributes(:title => @title.text, :desciption => @desciption.text, :due => Chronic.parse(@due.text))
-                    close
-                  end
-                end
-              end
-            end
-            button "Delete" do
-              delete = confirm "Deleting... Are you sure?"
-              if delete == true
-                Task.destroy(t.id)
-                alert "removed #{t.title}"
-              end
-            end
-            para
+        stack margin_left: 20
+        title "Tasks"
+        flow do
+          button "Create Task" do
+            create_or_edit_task(:false,$content_div)
           end
+        end
+
+        $content_div = stack do
+          draw_tasks_list
         end
       end
     end
-  end
-
-  task = Task.find(:all)
-    $tasks_s = stack do
-      task.each do |t|
-      tagline t.title
-      para t.desciption
-      para "Due: #{time_parse(t.due)}"
-      flow do
-        button "Edit", state: "nil" do
-          Shoes.app  title: "Editing Task: #{t.title}", width: 250, height: 400 do
-          title "edit task"
-          stack do
-            para "Task title:"
-            @title = edit_line text: "#{t.title}"
-            para "Task desciption:"
-            @desciption = edit_box text: "#{t.desciption}"
-            para "Task due date:"
-            @due = edit_line text: "#{time_parse(t.due)}"
-            button "update Task" do
-              task = Task.find(t.id)
-              @edit_task = task.update_attributes(:title => @title.text, :desciption => @desciption.text, :due => Chronic.parse(@due.text))
-              close
-            end
-          end
-        end
-      end
-
-      button "Delete" do
-        delete = confirm "Deleting... Are you sure?"
-        if delete == true
-          Task.destroy(t.id)
-          alert "removed #{t.title}"
-        end
-          end
-          para
-          end
-        end
-      end
-    end
-  end
   end
 end
 

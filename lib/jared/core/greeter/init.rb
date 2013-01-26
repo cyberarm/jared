@@ -1,6 +1,6 @@
 require "jared/plugin"
 
-plugin=Jared::Plugin.new
+Jared::Plugin.config do |plugin|
   plugin.name = "Greeter"
   plugin.description = "Shows a clock."
   plugin.author = "Cyberarm"
@@ -10,7 +10,6 @@ plugin=Jared::Plugin.new
   plugin.usage = "clock"
   plugin.version = "0.4.0"
   plugin.main_require = "lib/greeting"
-  plugin.jared_version = "0.0.7a4"
+  plugin.jared_version = "0.0.7a5"
   plugin.platform = :ruby
-
-@@plugin = plugin
+end

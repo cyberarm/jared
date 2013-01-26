@@ -1,6 +1,6 @@
 require "jared/plugin"
 
-plugin=Jared::Plugin.new
+Jared::Plugin.config do |plugin|
   plugin.name = "Stock"
   plugin.description = "Fetches stock data, from source."
   plugin.author = "Cyberarm"
@@ -14,5 +14,4 @@ plugin=Jared::Plugin.new
   plugin.main_require = "lib/stock"
   plugin.jared_version = "0.0.7a4"
   plugin.platform = :ruby
-
-@@plugin = plugin
+end

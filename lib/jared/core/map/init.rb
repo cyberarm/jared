@@ -1,6 +1,6 @@
 require "jared/plugin"
 
-plugin=Jared::Plugin.new
+Jared::Plugin.config do |plugin|
   plugin.name = "Google Maps"
   plugin.description = "Shows a clock."
   plugin.author = "Cyberarm"
@@ -12,5 +12,4 @@ plugin=Jared::Plugin.new
   plugin.main_require = "lib/map"
   plugin.jared_version = "0.0.7a4"
   plugin.platform = :ruby
-
-@@plugin = plugin
+end

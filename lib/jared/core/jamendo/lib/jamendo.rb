@@ -66,12 +66,13 @@ class Action
 
       sleep 1
 
-      @list = open("http://api.jamendo.com/get2/name+url+stream+album_name+album_url+album_image+artist_name+artist_url+duration/track/json/track_album+album_artist/?radioid=#{@radio_id}n=100&streamencoding=ogg2").read
+      @list = open("http://api.jamendo.com/get2/name+url+stream+album_name+album_url+album_image+artist_name+artist_url+duration/track/json/track_album+album_artist/?radioid=#{@radio_id}&n=100&streamencoding=ogg2").read
       @d = JSON.parse(@list)
       if mode == 'play'
         puts 'Starting loop, use CTRL-Pause(Break) to stop.'
-        loop do
-          v = Random.rand(0..@d.count-1)
+        (@d.count-1).times do |v|
+          p (@d.count-1)
+          # v = Random.rand(0..@d.count-1)
           @data = @d[v]
           @jared.update_attributes(:author_url => "#{@data['artist_url']}", :album_image => "#{@data['album_image']}", :music_url => "#{@data['url']}", :album_url => "#{@data['album_url']}", :now_playing => "#{@data['name']}", :now_playing_author => "#{@data['artist_name']}", :now_playing_album => "#{@data['album_name']}")
           player(v)

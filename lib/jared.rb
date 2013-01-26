@@ -31,11 +31,11 @@ require_relative "jared/logg"
 include Logg
 
 log.info "Loaded logger."
-log.info "Using Jared version: #{VERSION}"
+log.info "Using Jared version: #{Jared::VERSION}"
 Thread.new do
   info=open("http://rubygems.org/api/v1/gems/jared.json").read
   json=JSON.parse(info)
-  current_version = Versionomy.parse(VERSION)
+  current_version = Versionomy.parse(Jared::VERSION)
 
   web_version = Versionomy.parse(json['version'])
   if current_version < web_version
@@ -51,7 +51,7 @@ log.info "Loaded Database."
 
 require_relative "jared/plugins"
 log.info "Loading plugins..."
-@plugins=Plugins::Load.new.all
+@plugins=Plugins::Load.new.load_all
 log.info "Loaded plugins."
 
 if User.first.blank?

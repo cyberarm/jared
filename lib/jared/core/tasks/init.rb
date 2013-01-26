@@ -1,6 +1,6 @@
 require "jared/plugin"
 
-plugin=Jared::Plugin.new
+Jared::Plugin.config do |plugin|
   plugin.name = "Tasks"
   plugin.description = "Manage tasks."
   plugin.author = "Cyberarm"
@@ -12,5 +12,4 @@ plugin=Jared::Plugin.new
   plugin.main_require = "lib/task"
   plugin.jared_version = "0.0.7a4"
   plugin.platform = :ruby
-
-@@plugin = plugin
+end

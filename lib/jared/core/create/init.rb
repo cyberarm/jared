@@ -1,6 +1,6 @@
 require "jared/plugin"
 
-plugin=Jared::Plugin.new
+Jared::Plugin.config do |plugin|
   plugin.name = "Create"
   plugin.description = "Create files and folders, as well as project skeleton files."
   plugin.author = "Cyberarm"
@@ -13,5 +13,4 @@ plugin=Jared::Plugin.new
   plugin.main_require = "lib/create"
   plugin.jared_version = "0.0.7a4"
   plugin.platform = :ruby
-
-@@plugin = plugin
+end

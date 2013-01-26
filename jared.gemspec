@@ -4,7 +4,7 @@ require "jared/version"
 
 Gem::Specification.new do |s|
   s.name = "jared"
-  s.version = VERSION
+  s.version = Jared::VERSION
   s.authors = ["Cyber"]
   s.email = ["matthewlikesrobots@gmail.com"]
   s.homepage = "https://github.com/cyberarm/jared"
