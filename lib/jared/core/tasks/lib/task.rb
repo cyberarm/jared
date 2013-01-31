@@ -15,12 +15,12 @@ module JCPFT
             create_or_edit_task(task.id,$content_div)
           end
 
-          button "Delete" do
+          button "Delete" do |delete_button|
             check = confirm "Are you sure?"
             if check
               Task.destroy(task.id)
               $redraw_ui = true
-              self.state = 'disabled'
+              delete_button.state = 'disabled'
             end
           end
         end
@@ -97,15 +97,12 @@ class Action
       Shoes.app title: "Jared Tasks" do
         extend JCPFT::Extensions
 
-        Thread.new do
-          loop do
-            if $redraw_ui
-              $content_div.clear do
-                draw_tasks_list
-              end
-              $redraw_ui = false
+        every 0.5 do
+          if $redraw_ui
+            $content_div.clear do
+              draw_tasks_list
             end
-            sleep(0.5)
+            $redraw_ui = false
           end
         end
 
