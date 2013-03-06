@@ -1,83 +1,13 @@
-# Jared - Ruby Powered Digital Assistant (RDA)
-## What is Jared?
-Jared is a ruby program that in the hopefully near future will be useful for:
-* Creating and managing your tasks
-* Checking your email
-* Playing your preferred music
-* Creating skeleton project files
-* Understand spoken commands (in the distant future)
-* Other miscellaneous actions
+# Jared - Ruby powered Digital Assistant (RDA)
+Jared is a plugin-based application for managing your life,
+at its core is just a bunch of plugins.
+In the future I hope to have enough plugins for Jared to be able to function similar to Jarvis, but that is a ways off.
+Jared has a few built-in plugins (See wiki page [plugins](https://wiki.github.com/cyberarm/jared/plugins)).
 
-Jared's goal is to be a reality of Jarvis from the film, Ironman.
-
-However, thats a _long_ ways down the road.
 ## Install Jared
-You can get the lasest stable release on RubyGems via *gem install jared*
+You can get the latest stable release on RubyGems via *gem install jared*
 
-## Usage
+You can get the latest incomplete-feature release on RubyGems via *gem install jared --pre*
 
-### Clock
-  Opens a digital clock in a Green Shoes app.
-  
-  Usage: jared clock
-
-### Day
-  Puts current day.
-  
-  Usage: Jared day
-  
-  Tuesday
-  
-### Deamon
-  Run mail/task/appointment check every 60 seconds.
-  
-  Usage: jared deamon (mail/task/cal(endar))
-  
-  (if there is no second argument it'll check all three every 60 seconds.)
-  
-### Date
-  Puts the current date.
-  
-  Usage: jared date
-  
-  Wednesday the 22nd of February 2012
-  
-  (02/22/2012)
-  
-### Mail
-  Checks Gmail for new mails.
-  
-  Usage: jared mail
-  
-### Task
-  Manage your tasks.
-  
-  Opens a Green Shoes window for managing Tasks.
-
-  Usage: jared task
-
-### Time
-  puts the current time
-  
-  Usage: jared time
-  
-  05:21 am
-
-### Weather
-  Check you local weather information.
-
-  Usage: jared weather (today/tomorrow/forecast)
-
-
-### Whereis
-  Opens Gmaps in default browser.
-
-  Usage: jared whereis "Mt. st helens"
- 
-### View
-  Opens the file in the system viewer.
-  
-  Usage: jared view jared.rb
-
-## Contribute
-  [Wiki](http://github.com/cyberarm/jared/wiki/Contribute)
+## Want to contribute?
+Please see the wiki page about [contributing](http://github.com/cyberarm/jared/wiki/Contribute).
