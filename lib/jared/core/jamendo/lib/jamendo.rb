@@ -1,13 +1,16 @@
-require "json"
+require 'gtk2'
+require 'open-uri'
+require 'json'
 require 'gst'
+require_relative "../../../database"
 
 class Action
   class Jamendo
     attr_accessor :playloop, :playbin
     def length(l)
-      @m="#{l.to_i.divmod(60)[0]} minutes"
+      @m="#{l.to_i.divmod(60)[0]}m"
       if defined?(l.to_i.divmod(60)[1])
-        @s="#{l.to_i.divmod(60)[1]} seconds"
+        @s="#{l.to_i.divmod(60)[1]}s"
       else
         @s=nil
       end
@@ -38,22 +41,9 @@ class Action
       end
     end
 
-    # at_exit do
-    #   require_relative 'lib.rb'
-    #   Lib.db
-    #   @jared = Music.first
-    #   @jared.update_attributes(:author_url => "", :music_url => "", :album_image => "", :album_url => "", :now_playing => "", :now_playing_author => "", :now_playing_album => "")
-    # end
-
-    def jamendo(mode='play')
-      mode=mode.downcase
+    def find_user_prefered_radio
       Lib.db
-      @jared = Music.first
       @user  = User.first
-      require 'gtk2'
-      require 'open-uri'
-      require 'json'
-      require 'gst'
       @user.music
 
       @radios = open("http://api.jamendo.com/get2/id+name/radio/json/?n=all").read
@@ -63,26 +53,25 @@ class Action
         next unless radio['name'] == @user.music
         @radio_id = radio['id']
       end
+    end
+
+    def jamendo(mode='play')
+      mode=mode.downcase
+      find_user_prefered_radio
 
       sleep 1
 
-      @list = open("http://api.jamendo.com/get2/name+url+stream+album_name+album_url+album_image+artist_name+artist_url+duration/track/json/track_album+album_artist/?radioid=#{@radio_id}&n=100&streamencoding=ogg2").read
+      @list = open("http://api.jamendo.com/get2/name+stream+artist_name+duration/track/json/track_album+album_artist/?radioid=#{@radio_id}&n=100&streamencoding=ogg2").read
       @d = JSON.parse(@list)
       if mode == 'play'
         puts 'Starting loop, use CTRL-Pause(Break) to stop.'
         (@d.count-1).times do |v|
-          p (@d.count-1)
-          # v = Random.rand(0..@d.count-1)
           @data = @d[v]
-          @jared.update_attributes(:author_url => "#{@data['artist_url']}", :album_image => "#{@data['album_image']}", :music_url => "#{@data['url']}", :album_url => "#{@data['album_url']}", :now_playing => "#{@data['name']}", :now_playing_author => "#{@data['artist_name']}", :now_playing_album => "#{@data['album_name']}")
           player(v)
         end
-      elsif mode == 'help'
-        puts 'loop|once'
       end
     end
   end
 end
 
 a=Action::Jamendo.new.jamendo
-p a
