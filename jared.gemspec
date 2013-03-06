@@ -31,6 +31,5 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'area'
   s.add_runtime_dependency 'gmail'
   s.add_runtime_dependency 'gibberish'
-  s.add_runtime_dependency 'faster_require'
   s.add_runtime_dependency 'json'
 end
