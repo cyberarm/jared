@@ -1,35 +1,45 @@
 module Jared
-  module Plugin
-    class << self
-      attr_accessor :configuration
+  class Plugin
+    def plugin name
+      @plugin = name
     end
 
-    def self.config
-      self.configuration ||= Configuration.new
-      yield(configuration)
+    def description string
+      @description = string ||= ""
     end
 
-    class Configuration
-      attr_accessor :name
-      attr_accessor :description
-      attr_accessor :author
-      attr_accessor :author_email
-      attr_accessor :homepage
-      attr_accessor :sourcecode
-      attr_accessor :command
-      attr_accessor :arguments
-      attr_accessor :usage
-      attr_accessor :main_require
-      attr_accessor :platform
-      attr_accessor :version
-      attr_accessor :jared_version
-
-      def initialize
-      end
+    def version string
+      @version = string
     end
 
-    def self.version
-      "1.0.0"
+    def jared_version string
+      @jared_version = string
+    end
+
+    def rubygem boolean
+      @rubygem = boolean ||= false
+    end
+
+    def rubygem_name string
+      @rubygem_name = string ||= ""
+    end
+
+    def github boolean
+      @github = boolean ||= false
+    end
+
+    def github_repo string
+      @github_repo = string ||= ""
+    end
+
+    def ruby_platform string
+      # ruby, cruby, jruby, or rbx
+      @ruby_platform = string ||= "ruby"
+    end
+
+    def platform string
+      # windows, linux, mac, unix, or a blank string for any platform.
+      @platform = ""
     end
   end
 end
