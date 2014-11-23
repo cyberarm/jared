@@ -11,10 +11,11 @@ Gem::Specification.new do |s|
   s.summary = "Ruby powered digital assistant"
   s.description = "Ruby powered digital assistant"
 
-  s.rubyforge_project = "jared"
-
-  s.files = `git ls-files`.split("\n")
+  s.files = Dir["**/**/*.*"]# `git ls-files`.split("\n")
   s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib", "bin"]
+
+  s.add_runtime_dependency "multi_json"
+  s.add_runtime_dependency "thor"
 end
