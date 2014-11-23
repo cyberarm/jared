@@ -10,6 +10,7 @@ module Jared
       puts "#{stuffs}"
     end
 
+    # TODO: require gem before trying to defer to its thor subcommand class
     Jared::PluginList.parse['plugins'].each do |plugin|
       desc plugin['command'], plugin['description']
       define_method plugin['command'] do

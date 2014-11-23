@@ -1,4 +1,5 @@
 require "thor"
+require "logger"
 require "multi_json"
 require "open-uri"
 require_relative 'jared/version'

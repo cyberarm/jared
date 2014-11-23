@@ -12,6 +12,14 @@ module Jared
       @version = string
     end
 
+    def command string
+      @command = string
+    end
+
+    def main_class string
+      @main_class = string
+    end
+
     def jared_version string
       @jared_version = string
     end
