@@ -1,7 +1,7 @@
 module Jared
   class PluginList
     def initialize
-      @file = "#{Dir.home}/.jared/data/plugins_list.json"
+      @file = "#{Dir.home}/.jared/data/jared-plugins.json"
     end
 
     def fetch
@@ -10,7 +10,7 @@ module Jared
     end
 
     def parse
-      MultiJson.load(@file)
+      MultiJson.load(File.open(@file).read)
     end
   end
 end

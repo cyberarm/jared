@@ -1,51 +1,59 @@
 module Jared
   class Plugin
-    def plugin name
+    attr_reader :plugin, :description, :version, :command, :main_class,
+                :jared_version, :rubygem, :rubygem_name, :github, :github_repo,
+                :ruby_platform, :platform
+
+    def initialize
+      yield(self)
+    end
+
+    def plugin= name
       @plugin = name
     end
 
-    def description string
+    def description= string
       @description = string ||= ""
     end
 
-    def version string
+    def version= string
       @version = string
     end
 
-    def command string
+    def command= string
       @command = string
     end
 
-    def main_class string
+    def main_class= string
       @main_class = string
     end
 
-    def jared_version string
+    def jared_version= string
       @jared_version = string
     end
 
-    def rubygem boolean
+    def rubygem= boolean
       @rubygem = boolean ||= false
     end
 
-    def rubygem_name string
+    def rubygem_name= string
       @rubygem_name = string ||= ""
     end
 
-    def github boolean
+    def github= boolean
       @github = boolean ||= false
     end
 
-    def github_repo string
+    def github_repo= string
       @github_repo = string ||= ""
     end
 
-    def ruby_platform string
+    def ruby_platform= string
       # ruby, cruby, jruby, or rbx
       @ruby_platform = string ||= "ruby"
     end
 
-    def platform string
+    def platform= string
       # windows, linux, mac, unix, or a blank string for any platform.
       @platform = ""
     end
