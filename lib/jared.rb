@@ -7,5 +7,3 @@ require_relative 'jared/setup'
 require_relative 'jared/plugin_list'
 require_relative 'jared/logg'
 require_relative 'jared/cli'
-
-Jared::CLI.start(ARGV)

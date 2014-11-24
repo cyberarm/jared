@@ -5,8 +5,17 @@ module Jared
     end
 
     def fetch
-      list = open('https://raw.githubusercontent.com/cyberarm/jared-plugins/master/jared-plugins.json').read
-      File.open(@file, 'w') {|file| file.write list}
+      begin
+        list = open('https://raw.githubusercontent.com/cyberarm/jared-plugins/master/jared-plugins.json').read
+        File.open(@file, 'w') {|file| file.write list}
+      rescue
+        if File.exist?(@file)
+          # We'll live.
+        else
+          puts "Connection error.\nCould not fetch jared-plugins.json from github.com.\n:("
+          exit
+        end
+      end
     end
 
     def parse
