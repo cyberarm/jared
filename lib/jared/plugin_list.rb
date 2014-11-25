@@ -14,9 +14,9 @@ module Jared
           puts "Connection error.\nCould not fetch jared-plugins.json from github.com.\n:("
           exit
         end
-
-        File.open(@file, 'w') {|file| file.write list}
       end
+
+      File.open(@file, 'w') {|file| file.write list}
     end
 
     def parse
